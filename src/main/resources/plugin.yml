@@ -1,0 +1,5 @@
+name: ImageryAPI
+version: '${project.version}'
+main: dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin
+api-version: 1.19
+author: jensjeflensje
