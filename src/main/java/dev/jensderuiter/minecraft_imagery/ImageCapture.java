@@ -56,27 +56,32 @@ public class ImageCapture {
                 Vector rayTraceVector = new Vector(Math.cos(yaw + xrotate) * Math.cos(pitch + yrotate),
                         Math.sin(pitch + yrotate), Math.sin(yaw + xrotate) * Math.cos(pitch + yrotate));
 
-                RayTraceResult result = this.location.getWorld().rayTraceBlocks(
-                        this.location, rayTraceVector, 256,
-                        FluidCollisionMode.NEVER, true);
-
                 RayTraceResult entityResult = this.rayTraceEntitiesFromList(this.location, rayTraceVector, 64);
 
-                // Color change for liquids
-                RayTraceResult liquidResult = location.getWorld().rayTraceBlocks(
-                        this.location, rayTraceVector, 256,
-                        FluidCollisionMode.ALWAYS, false);
-                double[] dye = new double[] { 1, 1, 1 };
+                Location lookFrom = this.location.clone();
 
-                if (result != null && (liquidResult == null
-                        || Constants.EXCLUDED_BLOCKS.contains(liquidResult.getHitBlock().getType()))) {
+                // max tries for blocks to look through
+                for (int i = 0; i < 20; i++) {
+                    RayTraceResult result = this.location.getWorld().rayTraceBlocks(
+                            lookFrom, rayTraceVector, 256,
+                            FluidCollisionMode.ALWAYS, false);
+                    double[] dye = new double[]{1, 1, 1};
 
+                    if (result == null) {
+                        // no block was hit, so we will assume we are looking at the sky
+                        this.image.setRGB(x, y, Constants.SKY_COLOR.getRGB());
+                        break;
+                    }
+
+                    if (Constants.EXCLUDED_BLOCKS.contains(result.getHitBlock().getType())) {
+                        // we hit an excluded block. update position and keep looking
+                        lookFrom = result.getHitPosition().toLocation(this.location.getWorld());
+                        continue;
+                    }
+
+                    // color the pixel
                     this.colorWithDye(x, y, result, dye, rayTraceVector);
-                } else if (liquidResult != null) {
-                    this.colorWithDye(x, y, liquidResult, dye, rayTraceVector);
-                } else {
-                    // no block was hit, so we will assume we are looking at the sky
-                    this.image.setRGB(x, y, Constants.SKY_COLOR.getRGB());
+                    break;
                 }
 
                 if (entityResult == null) continue;
