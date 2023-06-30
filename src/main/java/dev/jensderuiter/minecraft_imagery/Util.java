@@ -157,6 +157,12 @@ public class Util {
         blocksMap.put(Material.COBBLESTONE, new Color(130, 130, 130));
         blocksMap.put(Material.COBBLESTONE_STAIRS, new Color(130, 130, 130));
         blocksMap.put(Material.COBBLESTONE_SLAB, new Color(130, 130, 130));
+        blocksMap.put(Material.SMOOTH_STONE_SLAB, new Color(154, 154, 154));
+        blocksMap.put(Material.STONE_BRICK_STAIRS, new Color(136, 134, 134));
+        blocksMap.put(Material.STONE_BRICK_SLAB, new Color(136, 134, 134));
+        blocksMap.put(Material.BRICKS, new Color(133, 84, 72));
+        blocksMap.put(Material.BRICK_SLAB, new Color(133, 84, 72));
+        blocksMap.put(Material.BRICK_STAIRS, new Color(133, 84, 72));
         blocksMap.put(Material.FURNACE, new Color(130, 130, 130));
         blocksMap.put(Material.STONE, new Color(117, 117, 117));
         blocksMap.put(Material.COBBLESTONE_WALL, new Color(92, 91, 91));
@@ -212,11 +218,13 @@ public class Util {
         blocksMap.put(Material.DARK_OAK_LOG, new Color(35, 27, 16));
         blocksMap.put(Material.SPRUCE_PLANKS, new Color(100, 78, 47));
         blocksMap.put(Material.OAK_PLANKS, new Color(172, 140, 88));
+        blocksMap.put(Material.OAK_WALL_SIGN, new Color(157, 128, 81));
         blocksMap.put(Material.BIRCH_PLANKS, new Color(202, 185, 131));
         blocksMap.put(Material.JUNGLE_PLANKS, new Color(172, 124, 89));
         blocksMap.put(Material.ACACIA_PLANKS, new Color(178, 102, 60));
         blocksMap.put(Material.DARK_OAK_PLANKS, new Color(62, 41, 18));
         blocksMap.put(Material.SPRUCE_FENCE, new Color(100, 78, 47));
+        blocksMap.put(Material.CHEST, new Color(107, 84, 53));
         blocksMap.put(Material.OAK_FENCE, new Color(172, 140, 88));
         blocksMap.put(Material.BIRCH_FENCE, new Color(202, 185, 131));
         blocksMap.put(Material.JUNGLE_FENCE, new Color(172, 124, 89));
@@ -320,6 +328,21 @@ public class Util {
 
     public static boolean hasColor(Block block) {
         return colorFromType(block, new double[] {0, 0, 0}) != null;
+    }
+
+    public static double[] applyToDye(double[] currentDye, double[] dyeToApply) {
+        double[] newDye = currentDye.clone();
+        // dye color intensity
+        float intensity = 0.4f;
+        newDye[0] -= (dyeToApply[1] * dyeToApply[2]) * intensity;
+        newDye[1] -= (dyeToApply[0] * dyeToApply[2]) * intensity;
+        newDye[2] -= (dyeToApply[0] * dyeToApply[1]) * intensity;
+
+        if (newDye[0] < 0) newDye[0] = 0;
+        if (newDye[1] < 0) newDye[1] = 0;
+        if (newDye[2] < 0) newDye[2] = 0;
+
+        return newDye;
     }
 
     public static Color applyDye(Color color, double[] dye) {

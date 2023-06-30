@@ -6,6 +6,7 @@ import org.bukkit.block.Block;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -21,24 +22,24 @@ public class Constants {
             Material.GRASS
     );
 
-    public static List<Material> THROUGH_BLOCKS = Arrays.asList(
-            Material.GLASS_PANE,
-            Material.BLACK_STAINED_GLASS_PANE,
-            Material.BLUE_STAINED_GLASS_PANE,
-            Material.CYAN_STAINED_GLASS_PANE,
-            Material.BROWN_STAINED_GLASS_PANE,
-            Material.GREEN_STAINED_GLASS_PANE,
-            Material.GRAY_STAINED_GLASS_PANE,
-            Material.LIGHT_BLUE_STAINED_GLASS_PANE,
-            Material.LIME_STAINED_GLASS_PANE,
-            Material.MAGENTA_STAINED_GLASS_PANE,
-            Material.ORANGE_STAINED_GLASS_PANE,
-            Material.PINK_STAINED_GLASS_PANE,
-            Material.PURPLE_STAINED_GLASS_PANE,
-            Material.RED_STAINED_GLASS_PANE,
-            Material.WHITE_STAINED_GLASS_PANE,
-            Material.YELLOW_STAINED_GLASS_PANE,
-            Material.LIGHT_GRAY_STAINED_GLASS_PANE,
-            Material.LEGACY_STAINED_GLASS_PANE
-    );
+    public static HashMap<Material, SeeThroughBlock> THROUGH_BLOCKS = new HashMap<>() {{
+        put(Material.GLASS_PANE, new SeeThroughBlock(Material.GLASS_PANE, new double[] {0.3, 0.3, 0.3}));
+        put(Material.BLACK_STAINED_GLASS_PANE, new SeeThroughBlock(Material.BLACK_STAINED_GLASS_PANE, new double[] {0.9, 0.9, 0.9}));
+        put(Material.BLUE_STAINED_GLASS_PANE, new SeeThroughBlock(Material.BLUE_STAINED_GLASS_PANE, new double[] {0.3, 0.3, 0.9}));
+        put(Material.CYAN_STAINED_GLASS_PANE, new SeeThroughBlock(Material.CYAN_STAINED_GLASS_PANE, new double[] {0.3, 0.5, 0.8}));
+        put(Material.BROWN_STAINED_GLASS_PANE, new SeeThroughBlock(Material.BROWN_STAINED_GLASS_PANE, new double[] {0.5, 0.4, 0.35}));
+        put(Material.GREEN_STAINED_GLASS_PANE, new SeeThroughBlock(Material.GREEN_STAINED_GLASS_PANE, new double[] {0.3, 0.9, 0.3}));
+        put(Material.GRAY_STAINED_GLASS_PANE, new SeeThroughBlock(Material.GRAY_STAINED_GLASS_PANE, new double[] {0.5, 0.5, 0.5}));
+        put(Material.LIGHT_BLUE_STAINED_GLASS_PANE, new SeeThroughBlock(Material.LIGHT_BLUE_STAINED_GLASS_PANE, new double[] {0.3, 0.3, 0.7}));
+        put(Material.LIME_STAINED_GLASS_PANE, new SeeThroughBlock(Material.LIME_STAINED_GLASS_PANE, new double[] {0.4, 0.9, 0.4}));
+        put(Material.MAGENTA_STAINED_GLASS_PANE, new SeeThroughBlock(Material.MAGENTA_STAINED_GLASS_PANE, new double[] {0.8, 0.3, 0.8}));
+        put(Material.ORANGE_STAINED_GLASS_PANE, new SeeThroughBlock(Material.ORANGE_STAINED_GLASS_PANE, new double[] {0.8, 0.5, 0.3}));
+        put(Material.PINK_STAINED_GLASS_PANE, new SeeThroughBlock(Material.PINK_STAINED_GLASS_PANE, new double[] {0.9, 0.3, 0.9}));
+        put(Material.PURPLE_STAINED_GLASS_PANE, new SeeThroughBlock(Material.PURPLE_STAINED_GLASS_PANE, new double[] {0.7, 0.5, 0.6}));
+        put(Material.RED_STAINED_GLASS_PANE, new SeeThroughBlock(Material.RED_STAINED_GLASS_PANE, new double[] {0.9, 0.3, 0.3}));
+        put(Material.WHITE_STAINED_GLASS_PANE, new SeeThroughBlock(Material.WHITE_STAINED_GLASS_PANE, new double[] {0.2, 0.2, 0.2}));
+        put(Material.YELLOW_STAINED_GLASS_PANE, new SeeThroughBlock(Material.YELLOW_STAINED_GLASS_PANE, new double[] {0.9, 0.9, 0.3}));
+        put(Material.LIGHT_GRAY_STAINED_GLASS_PANE, new SeeThroughBlock(Material.LIGHT_GRAY_STAINED_GLASS_PANE, new double[] {0.4, 0.4, 0.4}));
+        put(Material.LEGACY_STAINED_GLASS_PANE, new SeeThroughBlock(Material.LEGACY_STAINED_GLASS_PANE, new double[] {0.3, 0.3, 0.3}));
+    }};
 }

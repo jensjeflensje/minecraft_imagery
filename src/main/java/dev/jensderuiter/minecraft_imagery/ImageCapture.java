@@ -59,13 +59,13 @@ public class ImageCapture {
                 RayTraceResult entityResult = this.rayTraceEntitiesFromList(this.location, rayTraceVector, 64);
 
                 Location lookFrom = this.location.clone();
+                double[] dye = new double[]{1, 1, 1};
 
                 // max tries for blocks to look through
                 for (int i = 0; i < 20; i++) {
                     RayTraceResult result = this.location.getWorld().rayTraceBlocks(
                             lookFrom, rayTraceVector, 256,
                             FluidCollisionMode.ALWAYS, false);
-                    double[] dye = new double[]{1, 1, 1};
 
                     if (result == null) {
                         // no block was hit, so we will assume we are looking at the sky
@@ -75,6 +75,15 @@ public class ImageCapture {
 
                     if (Constants.EXCLUDED_BLOCKS.contains(result.getHitBlock().getType())) {
                         // we hit an excluded block. update position and keep looking
+                        lookFrom = result.getHitPosition().toLocation(this.location.getWorld());
+                        continue;
+                    }
+
+                    SeeThroughBlock seeThroughBlock = Constants.THROUGH_BLOCKS.get(result.getHitBlock().getType());
+
+                    if (seeThroughBlock != null) {
+                        // we hit a see-through block. update dye, update position and keep looking
+                        dye = Util.applyToDye(dye, seeThroughBlock.dye);
                         lookFrom = result.getHitPosition().toLocation(this.location.getWorld());
                         continue;
                     }
@@ -142,29 +151,7 @@ public class ImageCapture {
 
         Color color = Util.colorFromType(result.getHitBlock(), dye);
 
-        if (color != null) {
-            this.image.setRGB(x, y, color.getRGB());
-        } else {
-            if (Constants.THROUGH_BLOCKS.contains(result.getHitBlock().getType())) {
-                int i = 1;
-                Location searchFromLocation = result.getHitPosition().toLocation(location.getWorld()).clone();
-                while (true) {
-                    if (i > 100) {
-                        break;
-                    }
-                    searchFromLocation.add(rayTraceVector.normalize().multiply(i));
-                    RayTraceResult nextResult = location.getWorld().rayTraceBlocks(
-                            searchFromLocation, rayTraceVector, 10,
-                            FluidCollisionMode.NEVER, true);
-                    if (!Constants.EXCLUDED_BLOCKS.contains(nextResult.getHitBlock().getType())
-                            && !Constants.THROUGH_BLOCKS.contains(nextResult.getHitBlock().getType())) {
-                        this.colorWithDye(x, y, nextResult, dye, rayTraceVector);
-                        break;
-                    }
-                    i += 10;
-                }
-            }
-        }
+        if (color != null) this.image.setRGB(x, y, color.getRGB());
     }
 
     private RayTraceResult rayTraceEntitiesFromList(Location start, Vector direction, double maxDistance) {
