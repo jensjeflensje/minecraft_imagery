@@ -23,8 +23,6 @@ public class Constants {
     );
 
     public static HashMap<Material, SeeThroughBlock> THROUGH_BLOCKS = new HashMap<>() {{
-        // TODO: add normal glass too
-
         put(Material.IRON_BARS, new SeeThroughBlock(Material.IRON_BARS, new double[] {0.8, 0.8, 0.8}));
 
         // negative values because a cobweb is white
