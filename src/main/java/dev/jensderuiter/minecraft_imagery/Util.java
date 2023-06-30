@@ -197,6 +197,7 @@ public class Util {
         blocksMap.put(Material.OAK_LEAVES, new Color(49, 111, 21));
         blocksMap.put(Material.SPRUCE_LEAVES, new Color(55, 91, 56));
         blocksMap.put(Material.COARSE_DIRT, new Color(104, 75, 51));
+        blocksMap.put(Material.PODZOL, new Color(101, 71, 47));
         blocksMap.put(Material.ANDESITE, new Color(136, 136, 138));
         blocksMap.put(Material.DIORITE, new Color(181, 181, 181));
         blocksMap.put(Material.DEAD_BUSH, new Color(144, 97, 39));
@@ -212,10 +213,15 @@ public class Util {
         blocksMap.put(Material.GRAVEL, new Color(139, 135, 134));
         blocksMap.put(Material.SPRUCE_LOG, new Color(48, 34, 25));
         blocksMap.put(Material.OAK_LOG, new Color(58, 35, 9));
+        blocksMap.put(Material.OAK_WOOD, new Color(58, 35, 9));
         blocksMap.put(Material.BIRCH_LOG, new Color(196, 195, 193));
+        blocksMap.put(Material.BIRCH_WOOD, new Color(196, 195, 193));
         blocksMap.put(Material.JUNGLE_LOG, new Color(89, 76, 37));
+        blocksMap.put(Material.JUNGLE_WOOD, new Color(89, 76, 37));
         blocksMap.put(Material.ACACIA_LOG, new Color(95, 95, 85));
+        blocksMap.put(Material.ACACIA_WOOD, new Color(95, 95, 85));
         blocksMap.put(Material.DARK_OAK_LOG, new Color(35, 27, 16));
+        blocksMap.put(Material.DARK_OAK_WOOD, new Color(35, 27, 16));
         blocksMap.put(Material.SPRUCE_PLANKS, new Color(100, 78, 47));
         blocksMap.put(Material.OAK_PLANKS, new Color(172, 140, 88));
         blocksMap.put(Material.OAK_WALL_SIGN, new Color(157, 128, 81));
@@ -330,13 +336,13 @@ public class Util {
         return colorFromType(block, new double[] {0, 0, 0}) != null;
     }
 
-    public static double[] applyToDye(double[] currentDye, double[] dyeToApply) {
+    public static double[] applyToDye(double[] currentDye, double[] dyeToApply, float factor) {
         double[] newDye = currentDye.clone();
         // dye color intensity
-        float intensity = 0.4f;
-        newDye[0] -= (dyeToApply[1] * dyeToApply[2]) * intensity;
-        newDye[1] -= (dyeToApply[0] * dyeToApply[2]) * intensity;
-        newDye[2] -= (dyeToApply[0] * dyeToApply[1]) * intensity;
+        float intensity = 0.5f;
+        newDye[0] -= (dyeToApply[1] * dyeToApply[2]) * factor * intensity;
+        newDye[1] -= (dyeToApply[0] * dyeToApply[2]) * factor * intensity;
+        newDye[2] -= (dyeToApply[0] * dyeToApply[1]) * factor * intensity;
 
         if (newDye[0] < 0) newDye[0] = 0;
         if (newDye[1] < 0) newDye[1] = 0;

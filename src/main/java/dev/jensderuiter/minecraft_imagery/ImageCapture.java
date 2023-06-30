@@ -24,6 +24,7 @@ public class ImageCapture {
 
     Map<Player, List<Point2D>> playerOccurrences;
 
+    // TODO: add excluded entities to constructor
     public ImageCapture(
             Location location,
             List<Player> entities
@@ -83,7 +84,7 @@ public class ImageCapture {
 
                     if (seeThroughBlock != null) {
                         // we hit a see-through block. update dye, update position and keep looking
-                        dye = Util.applyToDye(dye, seeThroughBlock.dye);
+                        dye = Util.applyToDye(dye, seeThroughBlock.dye, seeThroughBlock.factor);
                         lookFrom = result.getHitPosition().toLocation(this.location.getWorld());
                         continue;
                     }
