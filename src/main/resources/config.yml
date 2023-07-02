@@ -33,7 +33,7 @@ blocks:
   bubble_column: 67,101,165
   tall_seagrass: 67,101,165
   kelp: 86,128,39
-  grass_block: 126,107,65
+  grass_block: 104,159,83
   dirt: 134,96,67
   sand: 219,207,163
   sandstone: 216,203,155
@@ -308,7 +308,7 @@ blocks:
   chain: 49,56,73
   vine: 116,116,116
   glow_lichen: 112,130,121
-  lily_pad: 133,133,133
+  lily_pad: 46,91,26
   nether_bricks: 44,21,26
   cracked_nether_bricks: 40,20,23
   chiseled_nether_bricks: 47,23,28
@@ -831,3 +831,4 @@ blocks:
   spruce_button: 114,84,48
   stone_button: 120,120,120
   oak_button: 58,35,9
+  redstone_wire: 107,5,0

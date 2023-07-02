@@ -42,9 +42,12 @@ public class Constants {
 
     public static List<Material> EXCLUDED_BLOCKS = Arrays.asList(
             Material.TALL_GRASS,
+            Material.FERN,
+            Material.LARGE_FERN,
             Material.GRASS
     );
 
+    // TODO: make this not contain a duplicate material entry
     public static HashMap<Material, TranslucentBlock> TRANSLUCENT_BLOCKS = new HashMap<>() {{
         put(Material.IRON_BARS, new TranslucentBlock(Material.IRON_BARS, new double[] {0.8, 0.8, 0.8}));
 
@@ -106,6 +109,10 @@ public class Constants {
         put(Material.DARK_OAK_LEAVES, new Color(46, 111, 17));
         put(Material.JUNGLE_LEAVES, new Color(60, 141, 24));
         put(Material.OAK_LEAVES, new Color(49, 111, 21));
+
+        put(Material.GRASS_BLOCK, new Color(104, 159, 83));
+
+        put(Material.LILY_PAD, new Color(46, 91, 26));
 
         put(Material.COBBLESTONE_SLAB, new Color(110, 110, 110));
         put(Material.COBBLESTONE_SLAB, new Color(110, 110, 110));
