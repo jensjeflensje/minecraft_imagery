@@ -4,7 +4,6 @@ import dev.jensderuiter.minecraft_imagery.Constants;
 import dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin;
 import dev.jensderuiter.minecraft_imagery.Util;
 import dev.jensderuiter.minecraft_imagery.image.ImageUtil;
-import dev.jensderuiter.minecraft_imagery.video.VideoUtil;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

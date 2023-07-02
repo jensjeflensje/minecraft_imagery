@@ -41,6 +41,15 @@ public class VideoFrameCapture {
     BufferedImage image;
     Graphics2D graphics;
 
+    /**
+     * Creates an instance of the VideoFrameCapture class.
+     * @param location The location from which to capture the frame.
+     * @param facing The direction the camera should look at (NORTH, EAST, SOUTH, WEST).
+     * @param entities A list of entities that can be drawn (only supports players).
+     * @param box_radius The radius the camera should look in blocks.
+     * @param width The width of the resulting image.
+     * @param height The height of the resulting image.
+     */
     public VideoFrameCapture(
             Location location,
             BlockFace facing,
@@ -149,6 +158,12 @@ public class VideoFrameCapture {
         return image;
     }
 
+    /**
+     * Handle a single block (write its texture on the canvas) with its given coordinates.
+     * @param x The x coordinate of the block.
+     * @param y The y coordinate of the block.
+     * @param z The Z coordinate of the block.
+     */
     private void handleBlock(double x, double y, double z) {
         Block block = world.getBlockAt(
                 (int) x,
@@ -224,6 +239,13 @@ public class VideoFrameCapture {
         );
     }
 
+    /**
+     * Handle an entity at a single point (write its texture on the canvas) with its given coordinates.
+     * @param entities The list of entities to compare the coordinates to.
+     * @param x The x coordinate of the block.
+     * @param y The y coordinate of the block.
+     * @param z The Z coordinate of the block.
+     */
     private void handleEntities(List<Entity> entities, double x, double y, double z) {
         for (Entity entity : entities) {
             if (!(entity instanceof Player)) continue;
@@ -313,6 +335,13 @@ public class VideoFrameCapture {
         }
     }
 
+    /**
+     * Create a 2D point on the canvas from 3-dimensional block coordinates.
+     * @param x The x coordinate of the block.
+     * @param y The y coordinate of the block.
+     * @param z The Z coordinate of the block.
+     * @return The 2D point where the block should be on the canvas.
+     */
     private Point2D get2D(int x, int y, int z) {
         return new Point2D.Double(
                 (((double) x / z) / 16) * HALF_WIDTH,
@@ -320,6 +349,14 @@ public class VideoFrameCapture {
         );
     }
 
+    /**
+     * Get the distances a coordinate is from the camera.
+     * @param x The x value of the coordinates.
+     * @param y The y value of the coordinates.
+     * @param z The z value of the coordinates.
+     * @return A 2-element double array with the distance to the front of the camera,
+     * and the distance to the side.
+     */
     private double[] getDistances(double x, double y, double z) {
         double distanceFrontOfCamera = 0;
         double distanceSideOfCamera = 0;
