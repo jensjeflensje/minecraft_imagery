@@ -1,7 +1,7 @@
 package dev.jensderuiter.minecraft_imagery.image;
 
 import dev.jensderuiter.minecraft_imagery.Constants;
-import dev.jensderuiter.minecraft_imagery.Util;
+import dev.jensderuiter.minecraft_imagery.video.VideoUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -85,7 +85,7 @@ public class ImageCapture {
 
                     if (translucentBlock != null) {
                         // we hit a see-through block. update dye, update position and keep looking
-                        dye = Util.applyToDye(dye, translucentBlock.dye, translucentBlock.factor);
+                        dye = ImageUtil.applyToDye(dye, translucentBlock.dye, translucentBlock.factor);
                         lookFrom = result
                                 .getHitPosition()
                                 .add(rayTraceVector.normalize())
@@ -126,7 +126,7 @@ public class ImageCapture {
 
             boolean isToFront = !(cameraYaw - 90 < playerYaw && cameraYaw + 90 > playerYaw);
 
-            BufferedImage combinedTexture = isToFront ? Util.getPlayerSkinFront(player) : Util.getPlayerSkinBack(player);
+            BufferedImage combinedTexture = isToFront ? VideoUtil.getPlayerSkinFront(player) : VideoUtil.getPlayerSkinBack(player);
 
             graphics.drawImage(
                     combinedTexture,
@@ -154,7 +154,7 @@ public class ImageCapture {
             }
         }
 
-        Color color = Util.colorFromType(result.getHitBlock(), dye);
+        Color color = ImageUtil.colorFromType(result.getHitBlock(), dye);
 
         if (color != null) this.image.setRGB(x, y, color.getRGB());
     }
@@ -168,7 +168,7 @@ public class ImageCapture {
 
         while(var17.hasNext()) {
             Entity entity = (Entity)var17.next();
-            if (Util.isWithinBlockIgnoreY(entity.getLocation(), this.location)) continue;
+            if (VideoUtil.isWithinBlockIgnoreY(entity.getLocation(), this.location)) continue;
             BoundingBox boundingBox = entity.getBoundingBox();
             RayTraceResult hitResult = boundingBox.rayTrace(startPos, direction, maxDistance);
             if (hitResult != null) {

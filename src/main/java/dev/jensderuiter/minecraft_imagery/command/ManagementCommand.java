@@ -3,6 +3,8 @@ package dev.jensderuiter.minecraft_imagery.command;
 import dev.jensderuiter.minecraft_imagery.Constants;
 import dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin;
 import dev.jensderuiter.minecraft_imagery.Util;
+import dev.jensderuiter.minecraft_imagery.image.ImageUtil;
+import dev.jensderuiter.minecraft_imagery.video.VideoUtil;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -42,7 +44,7 @@ public class ManagementCommand extends AbstractCommand {
                             String name = material.getKey().getKey();
                             BufferedImage image = Util.getImage(name);
                             if (image == null) continue;
-                            Color color = Util.getColorFromImage(image);
+                            Color color = ImageUtil.getColorFromImage(image);
                             blocksSection.set(name, color.getRed() + "," + color.getGreen() + "," + color.getBlue());
                         }
 
