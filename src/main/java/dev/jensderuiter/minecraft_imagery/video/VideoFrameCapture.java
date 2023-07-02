@@ -18,13 +18,13 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * A class to render a single video capture frame.
+ * Should be instantiated once for every frame.
+ * Use .render() to render and get the resulting image.
+ * It is recommended to ALWAYS CALL .render() ASYNCHRONOUSLY as it can take a while.
+ */
 public class VideoFrameCapture {
-    /**
-     * A class to render a single video capture frame.
-     * Should be instantiated once for every frame.
-     * Use .render() to render and get the resulting image.
-     * It is recommended to ALWAYS CALL .render() ASYNCHRONOUSLY as it can take a while.
-     */
 
     int BOX_RADIUS;
 

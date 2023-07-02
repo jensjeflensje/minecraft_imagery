@@ -16,13 +16,13 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
+/**
+ * A class to render a single photo of a Minecraft world and the players in it.
+ * Should be instantiated once for every capture.
+ * Use .render() to render and get the resulting image capture.
+ * It is recommended to ALWAYS CALL .render() ASYNCHRONOUSLY as it can take a while.
+ */
 public class ImageCapture {
-    /**
-     * A class to render a single photo of a Minecraft world and the players in it.
-     * Should be instantiated once for every capture.
-     * Use .render() to render and get the resulting image capture.
-     * It is recommended to ALWAYS CALL .render() ASYNCHRONOUSLY as it can take a while.
-     */
 
     Location location;
     BufferedImage image;
