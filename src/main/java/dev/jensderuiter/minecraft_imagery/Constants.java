@@ -16,10 +16,17 @@ public class Constants {
         initBlocks();
     }
 
+    /**
+     * Clears in-memory constant cache.
+     * Currently only used for solid blocks.
+     */
     protected static void clear() {
         BLOCKS.clear();
     }
 
+    /**
+     * Fetches all material-bound color codes and puts them in the solid block map.
+     */
     private static void initBlocks() {
         ConfigurationSection blocksSection =
                 ImageryAPIPlugin.plugin.getConfig().getConfigurationSection("blocks");
@@ -40,6 +47,7 @@ public class Constants {
 
     public static Color SKY_COLOR = new Color(201, 233, 246);
 
+    // the camera will look through these blocks
     public static List<Material> EXCLUDED_BLOCKS = Arrays.asList(
             Material.TALL_GRASS,
             Material.FERN,
@@ -100,7 +108,7 @@ public class Constants {
         put(Material.BARRIER, new TranslucentBlock(Material.BARRIER, new double[] {0, 0, 0}));
     }};
 
-    public static HashMap<Material, Color> BLOCKS = new HashMap<>();
+    public static HashMap<Material, Color> BLOCKS = new HashMap<>(); // all solid blocks
 
     // overrides cover cases where the average color of a texture is not quite right
     public static HashMap<Material, Color> BLOCKS_OVERRIDES = new HashMap<>() {{

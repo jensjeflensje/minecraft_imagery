@@ -10,6 +10,11 @@ public class Util {
 
     public static HashMap<String, BufferedImage> imageCache = new HashMap<>();
 
+    /**
+     * Gets an image using the specified name.
+     * @param name The name of a block.
+     * @return An image if found inside the resources/textures/ folder, otherwise null.
+     */
     public static BufferedImage getImage(String name) {
         BufferedImage image = imageCache.get("block:" + name);
         if (image != null) return image;

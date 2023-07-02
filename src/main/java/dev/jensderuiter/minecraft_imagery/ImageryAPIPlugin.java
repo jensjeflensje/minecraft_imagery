@@ -25,6 +25,9 @@ public class ImageryAPIPlugin extends JavaPlugin {
         // Plugin shutdown logic
     }
 
+    /**
+     * Reloads all constants. Currently only solid blocks.
+     */
     public static void reloadConstantsConfig() {
         Constants.clear();
         Constants.init();

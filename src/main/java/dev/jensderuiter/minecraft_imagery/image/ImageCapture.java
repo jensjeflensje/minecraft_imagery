@@ -17,6 +17,12 @@ import java.util.*;
 import java.util.List;
 
 public class ImageCapture {
+    /**
+     * A class to render a single photo of a Minecraft world and the players in it.
+     * Should be instantiated once for every capture.
+     * Use .render() to render and get the resulting image capture.
+     * It is recommended to ALWAYS CALL .render() ASYNCHRONOUSLY as it can take a while.
+     */
 
     Location location;
     BufferedImage image;
@@ -26,6 +32,12 @@ public class ImageCapture {
 
     Map<Player, List<Point2D>> playerOccurrences;
 
+    /**
+     *
+     * @param location The location from which to capture the image.
+     * @param entities A list of players that could be inside the photo.
+     *                 Players will only be visible in the photo if they are actually in the viewing frame.
+     */
     public ImageCapture(
             Location location,
             List<Player> entities
@@ -37,6 +49,11 @@ public class ImageCapture {
         this.entities = entities;
     }
 
+    /**
+     * Render an image which the instance's location and entities.
+     * It is recommended to ALWAYS CALL this method ASYNCHRONOUSLY as it can take a while.
+     * @return The resulting image (128x128)
+     */
     public BufferedImage render() {
 
         long startTime = System.currentTimeMillis();
@@ -94,7 +111,7 @@ public class ImageCapture {
                     }
 
                     // color the pixel
-                    this.colorWithDye(x, y, result, dye, rayTraceVector);
+                    this.colorWithDye(x, y, result, dye);
                     break;
                 }
 
@@ -143,7 +160,15 @@ public class ImageCapture {
         return image;
     }
 
-    private void colorWithDye(int x, int y, RayTraceResult result, double[] dye, Vector rayTraceVector) {
+    /**
+     * Color a single pixel using a ray trace result, which will be converted to a color.
+     * The given dye will also be applied to that color.
+     * @param x The x coordinate of the pixel to be filled.
+     * @param y The y coordinate of the pixel to be filled.
+     * @param result The ray trace result from which to gather the block information.
+     * @param dye The dye to apply to the color for the block (3-element array).
+     */
+    private void colorWithDye(int x, int y, RayTraceResult result, double[] dye) {
         byte lightLevel = result.getHitBlock().getRelative(result.getHitBlockFace()).getLightLevel();
 
         if(lightLevel > 0) {
@@ -159,6 +184,13 @@ public class ImageCapture {
         if (color != null) this.image.setRGB(x, y, color.getRGB());
     }
 
+    /**
+     * Raytrace from a set list of entities.
+     * @param start The location to start raytracing from.
+     * @param direction The vector of the direction in which to raytrace.
+     * @param maxDistance The maximum amount of blocks to raytrace in the direction.
+     * @return A RayTraceResult with the first entity the raytrace has collided with, or null if there is none.
+     */
     private RayTraceResult rayTraceEntitiesFromList(Location start, Vector direction, double maxDistance) {
         Vector startPos = start.toVector();
         Entity nearestHitEntity = null;
@@ -168,7 +200,9 @@ public class ImageCapture {
 
         while(var17.hasNext()) {
             Entity entity = (Entity)var17.next();
-            if (VideoUtil.isWithinBlockIgnoreY(entity.getLocation(), this.location)) continue;
+
+            // entity is in the same position, so likely the one that is taking the picture
+            if (ImageUtil.isWithinBlockIgnoreY(entity.getLocation(), this.location)) continue;
             BoundingBox boundingBox = entity.getBoundingBox();
             RayTraceResult hitResult = boundingBox.rayTrace(startPos, direction, maxDistance);
             if (hitResult != null) {

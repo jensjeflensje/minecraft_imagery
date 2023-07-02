@@ -12,6 +12,12 @@ import java.io.*;
 
 public class VideoUtil {
 
+    /**
+     * Puts all front skin parts together to form a front-facing view of the player skin.
+     * Also caches the skin view indefinitely in memory.
+     * @param player The player to get the front skin view from
+     * @return An image containing the front-facing view of a skin in 16x32 pixels.
+     */
     public static BufferedImage getPlayerSkinFront(Player player) {
         BufferedImage image = Util.imageCache.get("skin-front:" + player.getName());
         if (image != null) return image;
@@ -51,6 +57,12 @@ public class VideoUtil {
         return combinedTexture;
     }
 
+    /**
+     * Puts all backward-facing skin parts together to form a backwards-facing view of the player skin.
+     * Also caches the skin view indefinitely in memory.
+     * @param player The player to get the backwards-facing skin view from
+     * @return An image containing the backwards-facing view of a skin in 16x32 pixels.
+     */
     public static BufferedImage getPlayerSkinBack(Player player) {
         BufferedImage image = Util.imageCache.get("skin-back:" + player.getName());
         if (image != null) return image;
@@ -90,7 +102,12 @@ public class VideoUtil {
         return combinedTexture;
     }
 
-
+    /**
+     * Gets the raw skin texture from the Mojang API.
+     * Also caches the skin texture indefinitely in memory.
+     * @param player The player to get the skin texture from
+     * @return An image containing the raw
+     */
     private static BufferedImage getPlayerSkin(Player player) {
         BufferedImage image = Util.imageCache.get("skin:" + player.getName());
         if (image != null) return image;
@@ -103,10 +120,5 @@ public class VideoUtil {
 
         Util.imageCache.put("skin:" + player.getName(), image );
         return image;
-    }
-
-    public static boolean isWithinBlockIgnoreY(Location loc1, Location loc2) {
-        return loc1.getBlockX() == loc2.getBlockX()
-                && loc1.getBlockZ() == loc2.getBlockZ();
     }
 }

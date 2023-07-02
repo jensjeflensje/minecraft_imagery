@@ -4,6 +4,10 @@ import org.bukkit.Material;
 
 
 public class TranslucentBlock {
+    /**
+     * Represents a block that should be looked through, but has to alter the resulting color.
+     * Examples would be stained-glass or iron bars.
+     */
 
     // this dye will be used to alter the color of the end result
     public double[] dye;
