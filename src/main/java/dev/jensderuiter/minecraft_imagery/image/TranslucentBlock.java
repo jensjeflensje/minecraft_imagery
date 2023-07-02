@@ -1,9 +1,9 @@
-package dev.jensderuiter.minecraft_imagery;
+package dev.jensderuiter.minecraft_imagery.image;
 
 import org.bukkit.Material;
 
 
-public class SeeThroughBlock {
+public class TranslucentBlock {
 
     // this dye will be used to alter the color of the end result
     public double[] dye;
@@ -13,13 +13,13 @@ public class SeeThroughBlock {
     // may be used to make the dye work the other way around (make the subject lighter)
     public float factor;
 
-    public SeeThroughBlock(Material material, double[] dye, float factor) {
+    public TranslucentBlock(Material material, double[] dye, float factor) {
         this.dye = dye;
         this.material = material;
         this.factor = factor;
     }
 
-    public SeeThroughBlock(Material material, double[] dye) {
+    public TranslucentBlock(Material material, double[] dye) {
         this(material, dye, 1f);
     }
 

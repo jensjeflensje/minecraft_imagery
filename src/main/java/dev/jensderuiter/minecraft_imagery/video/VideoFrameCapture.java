@@ -1,6 +1,7 @@
-package dev.jensderuiter.minecraft_imagery;
+package dev.jensderuiter.minecraft_imagery.video;
 
 
+import dev.jensderuiter.minecraft_imagery.Util;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;

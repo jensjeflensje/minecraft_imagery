@@ -1,5 +1,7 @@
-package dev.jensderuiter.minecraft_imagery;
+package dev.jensderuiter.minecraft_imagery.image;
 
+import dev.jensderuiter.minecraft_imagery.Constants;
+import dev.jensderuiter.minecraft_imagery.Util;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,7 +26,6 @@ public class ImageCapture {
 
     Map<Player, List<Point2D>> playerOccurrences;
 
-    // TODO: add excluded entities to constructor
     public ImageCapture(
             Location location,
             List<Player> entities
@@ -80,12 +81,15 @@ public class ImageCapture {
                         continue;
                     }
 
-                    SeeThroughBlock seeThroughBlock = Constants.THROUGH_BLOCKS.get(result.getHitBlock().getType());
+                    TranslucentBlock translucentBlock = Constants.TRANSLUCENT_BLOCKS.get(result.getHitBlock().getType());
 
-                    if (seeThroughBlock != null) {
+                    if (translucentBlock != null) {
                         // we hit a see-through block. update dye, update position and keep looking
-                        dye = Util.applyToDye(dye, seeThroughBlock.dye, seeThroughBlock.factor);
-                        lookFrom = result.getHitPosition().toLocation(this.location.getWorld());
+                        dye = Util.applyToDye(dye, translucentBlock.dye, translucentBlock.factor);
+                        lookFrom = result
+                                .getHitPosition()
+                                .add(rayTraceVector.normalize())
+                                .toLocation(this.location.getWorld());
                         continue;
                     }
 
