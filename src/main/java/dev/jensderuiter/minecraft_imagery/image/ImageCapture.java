@@ -100,8 +100,8 @@ public class ImageCapture {
             for (int y = 0; y < this.options.getHeight(); y++) {
 
                 // calculate ray rotations
-                double yrotate = -((y) * .9 / this.options.getHeight() - .45);
-                double xrotate = ((x) * .9 / this.options.getWidth() - .45);
+                double yrotate = -((y) * this.options.getFov() / this.options.getHeight() - (this.options.getFov() / 2));
+                double xrotate = ((x) * this.options.getFov() / this.options.getWidth() - (this.options.getFov() / 2));
 
                 Vector rayTraceVector = new Vector(Math.cos(yaw + xrotate) * Math.cos(pitch + yrotate),
                         Math.sin(pitch + yrotate), Math.sin(yaw + xrotate) * Math.cos(pitch + yrotate));

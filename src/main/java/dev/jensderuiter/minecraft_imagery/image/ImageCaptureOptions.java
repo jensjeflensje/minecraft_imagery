@@ -19,6 +19,11 @@ public class ImageCaptureOptions {
     @Builder.Default
     private int height = Constants.MAP_HEIGHT;
 
+    // Should be a reasonable value near 1
+    // Examples would be 0.5 or 2
+    @Builder.Default
+    private float fov = 1;
+
     @Builder.Default
     private Color skyColor = Constants.SKY_COLOR;
 
