@@ -87,6 +87,7 @@ public class Constants {
 
         // glass blocks
         put(Material.GLASS, new TranslucentBlock(Material.GLASS, new double[] {0.3, 0.3, 0.3}));
+        put(Material.TINTED_GLASS, new TranslucentBlock(Material.TINTED_GLASS, new double[] {0.7, 0.7, 0.7}));
         put(Material.BLACK_STAINED_GLASS, new TranslucentBlock(Material.BLACK_STAINED_GLASS, new double[] {0.9, 0.9, 0.9}));
         put(Material.BLUE_STAINED_GLASS, new TranslucentBlock(Material.BLUE_STAINED_GLASS, new double[] {0.3, 0.3, 0.9}));
         put(Material.CYAN_STAINED_GLASS, new TranslucentBlock(Material.CYAN_STAINED_GLASS, new double[] {0.3, 0.5, 0.8}));
@@ -123,7 +124,7 @@ public class Constants {
         put(Material.LILY_PAD, new Color(46, 91, 26));
 
         put(Material.COBBLESTONE_SLAB, new Color(110, 110, 110));
-        put(Material.COBBLESTONE_SLAB, new Color(110, 110, 110));
+        put(Material.COBBLESTONE_STAIRS, new Color(110, 110, 110));
 
 
         put(Material.STONE_BUTTON, new Color(120, 120, 120));

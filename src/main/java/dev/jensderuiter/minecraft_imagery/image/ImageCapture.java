@@ -25,11 +25,11 @@ import java.util.List;
 public class ImageCapture {
 
     Location location;
+    List<Player> entities;
+    ImageCaptureOptions options;
+
     BufferedImage image;
     Graphics2D graphics;
-
-    List<Player> entities;
-
     Map<Player, List<Point2D>> playerOccurrences;
 
     /**
@@ -40,21 +40,44 @@ public class ImageCapture {
      */
     public ImageCapture(
             Location location,
-            List<Player> entities
+            List<Player> entities,
+            ImageCaptureOptions options
     ) {
         this.location = location.clone();
-        this.image = new BufferedImage(Constants.MAP_WIDTH, Constants.MAP_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        this.entities = entities;
+        this.options = options;
+
+        this.image = new BufferedImage(
+                this.options.getWidth(),
+                this.options.getHeight(),
+                BufferedImage.TYPE_INT_ARGB
+        );
         this.graphics = this.image.createGraphics();
         this.playerOccurrences = new HashMap<>();
-        this.entities = entities;
     }
 
     /**
-     * Creates an instance of the ImageCapture class.
+     * Creates an instance of the ImageCapture class with no players and no options.
      * @param location The location from which to capture the image.
      */
     public ImageCapture(Location location) {
-        this(location, new ArrayList<>());
+        this(location, new ArrayList<>(), ImageCaptureOptions.builder().build());
+    }
+
+    /**
+     * Creates an instance of the ImageCapture class with no options.
+     * @param location The location from which to capture the image.
+     */
+    public ImageCapture(Location location, List<Player> entities) {
+        this(location, entities, ImageCaptureOptions.builder().build());
+    }
+
+    /**
+     * Creates an instance of the ImageCapture class with no players.
+     * @param location The location from which to capture the image.
+     */
+    public ImageCapture(Location location, ImageCaptureOptions options) {
+        this(location, new ArrayList<>(), options);
     }
 
     /**
@@ -73,12 +96,12 @@ public class ImageCapture {
 
 
         // loop through every pixel on map
-        for (int x = 0; x < Constants.MAP_WIDTH; x++) {
-            for (int y = 0; y < Constants.MAP_HEIGHT; y++) {
+        for (int x = 0; x < this.options.getWidth(); x++) {
+            for (int y = 0; y < this.options.getHeight(); y++) {
 
                 // calculate ray rotations
-                double yrotate = -((y) * .9 / Constants.MAP_HEIGHT - .45);
-                double xrotate = ((x) * .9 / Constants.MAP_WIDTH - .45);
+                double yrotate = -((y) * .9 / this.options.getHeight() - .45);
+                double xrotate = ((x) * .9 / this.options.getWidth() - .45);
 
                 Vector rayTraceVector = new Vector(Math.cos(yaw + xrotate) * Math.cos(pitch + yrotate),
                         Math.sin(pitch + yrotate), Math.sin(yaw + xrotate) * Math.cos(pitch + yrotate));
@@ -96,17 +119,19 @@ public class ImageCapture {
 
                     if (result == null) {
                         // no block was hit, so we will assume we are looking at the sky
-                        this.image.setRGB(x, y, Constants.SKY_COLOR.getRGB());
+                        this.image.setRGB(x, y, this.options.getSkyColor().getRGB());
                         break;
                     }
 
-                    if (Constants.EXCLUDED_BLOCKS.contains(result.getHitBlock().getType())) {
+                    if (this.options.getExcludedBlocks().contains(result.getHitBlock().getType())) {
                         // we hit an excluded block. update position and keep looking
                         lookFrom = result.getHitPosition().toLocation(this.location.getWorld());
                         continue;
                     }
 
-                    TranslucentBlock translucentBlock = Constants.TRANSLUCENT_BLOCKS.get(result.getHitBlock().getType());
+                    TranslucentBlock translucentBlock = this.options
+                            .getTranslucentBlocks()
+                            .get(result.getHitBlock().getType());
 
                     if (translucentBlock != null) {
                         // we hit a see-through block. update dye, update position and keep looking
