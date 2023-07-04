@@ -33,7 +33,7 @@ public class ImageCapture {
     Map<Player, List<Point2D>> playerOccurrences;
 
     /**
-     * Creates an intance of the ImageCapture class.
+     * Creates an instance of the ImageCapture class.
      * @param location The location from which to capture the image.
      * @param entities A list of players that could be inside the photo.
      *                 Players will only be visible in the photo if they are actually in the viewing frame.
@@ -47,6 +47,14 @@ public class ImageCapture {
         this.graphics = this.image.createGraphics();
         this.playerOccurrences = new HashMap<>();
         this.entities = entities;
+    }
+
+    /**
+     * Creates an instance of the ImageCapture class.
+     * @param location The location from which to capture the image.
+     */
+    public ImageCapture(Location location) {
+        this(location, new ArrayList<>());
     }
 
     /**
