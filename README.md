@@ -17,7 +17,8 @@ or translucent blocks in front of it (e.g. stained glass).
 
 ### Video frame capture
 This library also has a video frame capture utility.
-The goal of this utility is to render a frame very quickly.
+The goal of this utility is to render a frame very quickly
+(or at least fast enough that it can be somewhat useful to creating a 5fps video :P).
 This utility is way faster than an image capture,
 but compromises quite a lot on looks and accuracy.
 
