@@ -179,7 +179,7 @@ public class ImageCapture {
 
             // crops are needed when only a part of the player is in view
             // so that only the part that can be seen will be put in the image
-            // (not the whole image, squeezed or stretched)
+            // (not the whole player texture, squeezed or stretched)
 
             if (topLeftPoint.getY() == 0
                 || bottomRightPoint.getY() == this.options.getHeight() - 1) {
@@ -188,7 +188,7 @@ public class ImageCapture {
                 double playerLocationBottom = playerBox.getMinY();
 
                 // a player 1.8 blocks high
-                // so the difference / 1.8 * <canvas width> would return the amount of pixels can actually be seen
+                // so the difference / 1.8 * <canvas width> would return the amount of pixels that can actually be seen
                 imageCroppedTop = playerLocationTop > topLeft.getHitPosition().getY()
                         ? Math.abs(playerLocationTop - topLeft.getHitPosition().getY())
                         / 1.8 * (this.options.getHeight() - (bottomRightPoint.getY() - topLeftPoint.getY()))
