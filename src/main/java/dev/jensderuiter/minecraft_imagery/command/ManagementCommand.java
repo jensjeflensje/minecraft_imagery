@@ -24,12 +24,14 @@ public class ManagementCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        super.onCommand(sender, command, s, args);
+    public String getPermission() {
+        return "imageryapi.admin";
+    }
 
+    public void execute() {
         if (args.length == 0) {
             this.sendHelp();
-            return true;
+            return;
         }
 
         switch (args[0]) {
@@ -75,7 +77,5 @@ public class ManagementCommand extends AbstractCommand {
             }
             default -> this.sendHelp();
         }
-
-        return true;
     }
 }
