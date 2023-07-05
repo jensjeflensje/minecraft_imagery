@@ -20,6 +20,7 @@ public class ImageCaptureOptions {
     private int height = Constants.MAP_HEIGHT;
 
     // Should be a reasonable value near 1
+    // Lower values are more zoomed in, higher values have a wider view
     // Examples would be 0.5 or 2
     @Builder.Default
     private float fov = 1;
@@ -39,5 +40,7 @@ public class ImageCaptureOptions {
     @Builder.Default
     private HashMap<Material, Color> blocksOverrides = Constants.BLOCKS_OVERRIDES;
 
+    @Builder.Default
+    private boolean dayLightCycleAware = true;
 
 }

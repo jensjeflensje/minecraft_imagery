@@ -113,4 +113,24 @@ public class ImageUtil {
         return loc1.getBlockX() == loc2.getBlockX()
                 && loc1.getBlockZ() == loc2.getBlockZ();
     }
+
+    /**
+     * Returns a yaw that is always a positive number.
+     * The returned value will resemble a 360-degree output.
+     * @param rawYaw The yaw gotten from spigot (-180 to 180)
+     * @return The transformed yaw (0 to 360).
+     */
+    public static float positiveYaw(float rawYaw) {
+        return rawYaw > 0 ? rawYaw : 180 + (180 + rawYaw);
+    }
+
+    /**
+     * Returns the difference between two numbers regardless of one or the other being negative.
+     * @param val1 The first value.
+     * @param val2 The second value.
+     * @return The difference between the two values.
+     */
+    public static double difference(double val1, double val2) {
+        return val1 > val2 ? val1 - val2 : val2 - val1;
+    }
 }

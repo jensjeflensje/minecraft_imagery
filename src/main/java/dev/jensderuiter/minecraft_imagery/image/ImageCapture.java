@@ -1,6 +1,5 @@
 package dev.jensderuiter.minecraft_imagery.image;
 
-import dev.jensderuiter.minecraft_imagery.Constants;
 import dev.jensderuiter.minecraft_imagery.video.VideoUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -30,7 +29,7 @@ public class ImageCapture {
 
     BufferedImage image;
     Graphics2D graphics;
-    Map<Player, List<Point2D>> playerOccurrences;
+    Map<Player, List<RayTracedPoint2D>> playerOccurrences;
 
     /**
      * Creates an instance of the ImageCapture class.
@@ -152,36 +151,89 @@ public class ImageCapture {
 
                 Entity hitEntity = entityResult.getHitEntity();
                 if (hitEntity instanceof Player hitPlayer) {
-                    List<Point2D> pixelList = playerOccurrences.get(hitPlayer);
+                    List<RayTracedPoint2D> pixelList = playerOccurrences.get(hitPlayer);
                     if (pixelList == null) {
                         pixelList = new ArrayList<>();
                     }
-                    pixelList.add(new Point2D.Float(x, y));
+                    pixelList.add(new RayTracedPoint2D(
+                           new Point2D.Float(x, y),
+                           entityResult.getHitPosition().toLocation(this.location.getWorld())
+                    ));
                     playerOccurrences.put(hitPlayer, pixelList);
                 }
             }
         }
 
-        for (Map.Entry<Player, List<Point2D>> playerEntry : playerOccurrences.entrySet()) {
-            Point2D topLeftPoint = playerEntry.getValue().get(0);
-            Point2D bottomRightPoint = playerEntry.getValue().get(playerEntry.getValue().size() - 1);
+        for (Map.Entry<Player, List<RayTracedPoint2D>> playerEntry : playerOccurrences.entrySet()) {
+            RayTracedPoint2D topLeft = playerEntry.getValue().get(0);
+            Point2D topLeftPoint = topLeft.getPoint2D();
 
-            int width = (int) (bottomRightPoint.getX() - topLeftPoint.getX() + 1);
-            int height = (int) (bottomRightPoint.getY() - topLeftPoint.getY() + 1);
+            RayTracedPoint2D bottomRight = playerEntry.getValue().get(playerEntry.getValue().size() - 1);
+            Point2D bottomRightPoint = bottomRight.getPoint2D();
 
             Player player = playerEntry.getKey();
 
-            float cameraYaw = this.location.getYaw() + 180;
-            float playerYaw = player.getLocation().getYaw() + 180;
+            BoundingBox playerBox = player.getBoundingBox();
 
-            boolean isToFront = !(cameraYaw - 90 < playerYaw && cameraYaw + 90 > playerYaw);
+            double imageCroppedTop = 0, imageCroppedBottom = 0, imageCroppedLeft = 0, imageCroppedRight = 0;
+
+            // crops are needed when only a part of the player is in view
+            // so that only the part that can be seen will be put in the image
+            // (not the whole image, squeezed or stretched)
+
+            if (topLeftPoint.getY() == 0
+                || bottomRightPoint.getY() == this.options.getHeight() - 1) {
+
+                double playerLocationTop = playerBox.getMaxY();
+                double playerLocationBottom = playerBox.getMinY();
+
+                // a player 1.8 blocks high
+                // so the difference / 1.8 * <canvas width> would return the amount of pixels can actually be seen
+                imageCroppedTop = playerLocationTop > topLeft.getHitPosition().getY()
+                        ? Math.abs(playerLocationTop - topLeft.getHitPosition().getY())
+                        / 1.8 * (this.options.getHeight() - (bottomRightPoint.getY() - topLeftPoint.getY()))
+                        : 0;
+
+                imageCroppedBottom = playerLocationBottom < bottomRight.getHitPosition().getY()
+                        ? Math.abs(playerLocationBottom - bottomRight.getHitPosition().getY())
+                        / 1.8 * (this.options.getHeight() - (bottomRightPoint.getY() - topLeftPoint.getY()))
+                        : 0;
+            }
+
+            if (topLeftPoint.getX() == 0 || bottomRightPoint.getX() == 127) {
+                double imageCroppedX = playerBox.getWidthX() - ImageUtil.difference(
+                        topLeft.getHitPosition().getX(),
+                        bottomRight.getHitPosition().getX()
+                );
+
+                double imageCroppedZ = playerBox.getWidthZ() - ImageUtil.difference(
+                        topLeft.getHitPosition().getZ(),
+                        bottomRight.getHitPosition().getZ()
+                );
+
+                double combinedValue = Math.sqrt(Math.pow(imageCroppedX, 2) + Math.pow(imageCroppedZ, 2))
+                        * this.options.getWidth();
+
+                if (topLeftPoint.getX() == 0) imageCroppedLeft = combinedValue;
+                if (bottomRightPoint.getX() == 127) imageCroppedRight = combinedValue;
+            }
+
+            int width = (int) (bottomRightPoint.getX() - topLeftPoint.getX() + 1
+                    + imageCroppedLeft + imageCroppedRight);
+            int height = (int) (bottomRightPoint.getY() - topLeftPoint.getY() + 1
+                    + imageCroppedTop + imageCroppedBottom);
+
+            float cameraYaw = ImageUtil.positiveYaw(this.location.getYaw());
+            float playerYaw = ImageUtil.positiveYaw(player.getLocation().getYaw());
+
+            boolean isToFront = !(playerYaw + 90 > cameraYaw && playerYaw - 90 < cameraYaw);
 
             BufferedImage combinedTexture = isToFront ? VideoUtil.getPlayerSkinFront(player) : VideoUtil.getPlayerSkinBack(player);
 
             graphics.drawImage(
                     combinedTexture,
-                    (int) topLeftPoint.getX(),
-                    (int) topLeftPoint.getY(),
+                    (int) (topLeftPoint.getX() - imageCroppedLeft),
+                    (int) (topLeftPoint.getY() - imageCroppedTop),
                     width,
                     height,
                     null
