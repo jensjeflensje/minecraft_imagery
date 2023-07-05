@@ -28,6 +28,7 @@ public class ManagementCommand extends AbstractCommand {
         return "imageryapi.admin";
     }
 
+    @Override
     public void execute() {
         if (args.length == 0) {
             this.sendHelp();
