@@ -1,0 +1,9 @@
+# local, s3 or none
+provider: none
+
+s3:
+  endpoint:
+  region:
+  access_key:
+  secret_key:
+  bucket:

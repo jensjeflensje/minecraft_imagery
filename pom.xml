@@ -89,6 +89,11 @@
             <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.davidmoten</groupId>
+            <artifactId>aws-lightweight-client-java</artifactId>
+            <version>0.1.15</version>
+        </dependency>
     </dependencies>
 
 </project>
