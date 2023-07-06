@@ -29,6 +29,9 @@ public class ImageCaptureOptions {
     private Color skyColor = Constants.SKY_COLOR;
 
     @Builder.Default
+    private Color skyColorNight = Constants.SKY_COLOR_NIGHT;
+
+    @Builder.Default
     private List<Material> excludedBlocks = Constants.EXCLUDED_BLOCKS;
 
     @Builder.Default

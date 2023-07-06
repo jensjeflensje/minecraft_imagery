@@ -92,7 +92,7 @@ public class ImageCapture {
         double pitch = -Math.toRadians(this.location.getPitch());
         double yaw = Math.toRadians(this.location.getYaw() + 90);
 
-
+        this.initBackground();
 
         // loop through every pixel on map
         for (int x = 0; x < this.options.getWidth(); x++) {
@@ -118,7 +118,6 @@ public class ImageCapture {
 
                     if (result == null) {
                         // no block was hit, so we will assume we are looking at the sky
-                        this.image.setRGB(x, y, this.options.getSkyColor().getRGB());
                         break;
                     }
 
@@ -243,6 +242,25 @@ public class ImageCapture {
 
         Bukkit.getLogger().info("This took " + (System.currentTimeMillis() - startTime) + "ms");
         return image;
+    }
+
+    /**
+     * Initializes the image background with a sky color and sometimes a sun/moon.
+     * This is dependent on the options given and when enabled, the current world time.
+     */
+    private void initBackground() {
+        long worldTime = this.location.getWorld().getTime() % 24000;
+
+        if (!this.options.isDayLightCycleAware()
+                // this checks if it is daytime (06:00 - 18:00)
+                || worldTime >= 0 && worldTime <= 12000) {
+            this.graphics.setColor(this.options.getSkyColor());
+        } else {
+            this.graphics.setColor(this.options.getSkyColorNight());
+        }
+
+        this.graphics.fillRect(0, 0, this.options.getWidth(), this.options.getHeight());
+
     }
 
     /**

@@ -46,6 +46,7 @@ public class Constants {
     public static int MAP_HEIGHT = 128;
 
     public static Color SKY_COLOR = new Color(201, 233, 246);
+    public static Color SKY_COLOR_NIGHT = new Color(68, 59, 65);
 
     // the camera will look through these blocks
     public static List<Material> EXCLUDED_BLOCKS = Arrays.asList(
