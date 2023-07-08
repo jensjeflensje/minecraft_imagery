@@ -240,7 +240,7 @@ public class ImageCapture {
 
         }
 
-        Bukkit.getLogger().info("This took " + (System.currentTimeMillis() - startTime) + "ms");
+        Bukkit.getLogger().fine("Image capture took " + (System.currentTimeMillis() - startTime) + "ms");
         return image;
     }
 

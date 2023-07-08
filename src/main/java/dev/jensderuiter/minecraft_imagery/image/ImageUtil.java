@@ -95,7 +95,7 @@ public class ImageUtil {
 
         BufferedImage image = Util.getImage(block.getType().getKey().getKey());
         if (image != null) {
-            Bukkit.getLogger().info(String.format(
+            Bukkit.getLogger().warning(String.format(
                     "Missing color entry for %s while it has an image to sample from. " +
                             "Consider rerunning the generatedefaults command.",
                     block.getType()));
