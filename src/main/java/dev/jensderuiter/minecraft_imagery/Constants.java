@@ -10,6 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 
 
+/**
+ * Constants for image captures.
+ * This class contains the default options for image capture options.
+ */
 public class Constants {
 
     protected static void init() {

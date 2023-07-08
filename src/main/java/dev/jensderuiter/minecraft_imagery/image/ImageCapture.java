@@ -1,6 +1,6 @@
 package dev.jensderuiter.minecraft_imagery.image;
 
-import dev.jensderuiter.minecraft_imagery.video.VideoUtil;
+import dev.jensderuiter.minecraft_imagery.Util;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -227,7 +227,7 @@ public class ImageCapture {
 
             boolean isToFront = !(playerYaw + 90 > cameraYaw && playerYaw - 90 < cameraYaw);
 
-            BufferedImage combinedTexture = isToFront ? VideoUtil.getPlayerSkinFront(player) : VideoUtil.getPlayerSkinBack(player);
+            BufferedImage combinedTexture = isToFront ? Util.getPlayerSkinFront(player) : Util.getPlayerSkinBack(player);
 
             graphics.drawImage(
                     combinedTexture,

@@ -20,7 +20,6 @@ public class ImageryAPIPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
         plugin = this;
 
         getCommand("imageryapi").setExecutor(new ManagementCommand());
@@ -34,7 +33,6 @@ public class ImageryAPIPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
     }
 
     /**
@@ -45,9 +43,11 @@ public class ImageryAPIPlugin extends JavaPlugin {
         Constants.init();
     }
 
-    // TODO: javadocs
+    /**
+     * Initialize the storage class according to the config.
+     */
     private void initStorage() {
-        this.createCustomConfig();
+        this.createStorageConfig();
 
         switch (this.storageConfig.getString("provider")) {
             case "local":
@@ -68,7 +68,11 @@ public class ImageryAPIPlugin extends JavaPlugin {
         }
     }
 
-    private void createCustomConfig() {
+    /**
+     * Create the storage config file if it doesn't exist yet.
+     * Creating the storage config file will also fill it with default options.
+     */
+    private void createStorageConfig() {
         File storageConfigFile = new File(getDataFolder(), "storage.yml");
         if (!storageConfigFile.exists()) {
             storageConfigFile.getParentFile().mkdirs();

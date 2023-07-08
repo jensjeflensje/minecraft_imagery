@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-// TODO: javadocs
 public class LocalStorageProvider implements StorageProvider {
 
     private File folder;
 
+    /**
+     * Initialize the Local storage provider.
+     * This saves images to the storage/ folder inside the plugin data folder.
+     */
     public LocalStorageProvider() {
         this.folder = Paths.get(
                 ImageryAPIPlugin.plugin.getDataFolder().toString(), "storage").toFile();
@@ -28,6 +31,12 @@ public class LocalStorageProvider implements StorageProvider {
                 "Local storage successfully initialized (currently containing %d entries)", fileCount));
     }
 
+    /**
+     * Fetch an image from the local storage. Image is in PNG format (TYPE_INT_ARGB).
+     * @param uuid The UUID of the image to fetch. You have saved this from the store method.
+     * @return The image with the specified UUID.
+     * @throws StorageException When the fetching fails.
+     */
     @Override
     public BufferedImage fetch(UUID uuid) throws StorageException {
         String fileName = getFileName(uuid.toString());
@@ -46,6 +55,12 @@ public class LocalStorageProvider implements StorageProvider {
         }
     }
 
+    /**
+     * Store an image in the local storage. Will be stored as (generated uuid).png
+     * @param image The image to store.
+     * @return The UUID of the image you've just stored. Used to retrieve or remove the image.
+     * @throws StorageException When storing the image fails.
+     */
     @Override
     public UUID store(BufferedImage image) throws StorageException {
         while (true) {
@@ -75,6 +90,11 @@ public class LocalStorageProvider implements StorageProvider {
         }
     }
 
+    /**
+     * Remove an image from the S3 bucket.
+     * @param uuid The UUID of the image to remove. You have saved this from the store method.
+     * @throws StorageException When the deletion fails. Permissions? Already gone?
+     */
     @Override
     public void remove(UUID uuid) throws StorageException {
         String fileName = getFileName(uuid.toString());

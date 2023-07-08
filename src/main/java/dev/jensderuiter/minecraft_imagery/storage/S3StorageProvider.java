@@ -11,12 +11,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-// TODO: javadocs
 public class S3StorageProvider implements StorageProvider {
 
     private Client s3;
     private String bucket;
 
+    /**
+     * Initialize the S3 storage provider.
+     * @param endpoint S3 endpoint url.
+     * @param region S3 region (auto for CloudFlare R2).
+     * @param accessKey S3 access key.
+     * @param secretKey S3 secret key.
+     * @param bucket S3 bucket.
+     */
     public S3StorageProvider(
             String endpoint,
             String region,
@@ -42,6 +49,12 @@ public class S3StorageProvider implements StorageProvider {
                 "S3 storage successfully initialized (currently containing %d entries)", fileCount));
     }
 
+    /**
+     * Fetch an image from the S3 bucket. Image is in PNG format (TYPE_INT_ARGB).
+     * @param uuid The UUID of the image to fetch. You have saved this from the store method.
+     * @return The image with the specified UUID.
+     * @throws StorageException When the fetching fails.
+     */
     @Override
     public BufferedImage fetch(UUID uuid) throws StorageException {
         String fileName = getFileName(uuid.toString());
@@ -63,6 +76,12 @@ public class S3StorageProvider implements StorageProvider {
         }
     }
 
+    /**
+     * Store an image in the S3 bucket. Will be stored as (generated uuid).png
+     * @param image The image to store.
+     * @return The UUID of the image you've just stored. Used to retrieve or remove the image.
+     * @throws StorageException When storing the image fails.
+     */
     @Override
     public UUID store(BufferedImage image) throws StorageException {
         while (true) {
@@ -93,6 +112,11 @@ public class S3StorageProvider implements StorageProvider {
         }
     }
 
+    /**
+     * Remove an image from the S3 bucket.
+     * @param uuid The UUID of the image to remove. You have saved this from the store method.
+     * @throws StorageException When the deletion fails.
+     */
     @Override
     public void remove(UUID uuid) throws StorageException {
         String fileName = getFileName(uuid.toString());

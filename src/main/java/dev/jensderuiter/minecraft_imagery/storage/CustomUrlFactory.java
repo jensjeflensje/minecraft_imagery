@@ -4,6 +4,9 @@ import com.github.davidmoten.aws.lw.client.BaseUrlFactory;
 
 import java.util.Optional;
 
+/**
+ * A custom url factory class to use the S3 library with custom endpoints.
+ */
 public class CustomUrlFactory implements BaseUrlFactory {
 
     String endpoint;
