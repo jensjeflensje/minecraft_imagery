@@ -285,7 +285,7 @@ public class VideoFrameCapture {
 
             boolean isToFront = (yawToCamera < 90) || (yawToCamera > 270);
 
-            BufferedImage combinedTexture = isToFront ? VideoUtil.getPlayerSkinFront(player) : VideoUtil.getPlayerSkinBack(player);
+            BufferedImage combinedTexture = isToFront ? Util.getPlayerSkinFront(player) : Util.getPlayerSkinBack(player);
 
             Point2D topLeftPos = get2D(
                     (int) distanceSideOfCamera,
