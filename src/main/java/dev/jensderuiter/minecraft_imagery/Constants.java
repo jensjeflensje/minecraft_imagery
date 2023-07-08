@@ -143,5 +143,22 @@ public class Constants {
         put(Material.CRIMSON_BUTTON, new Color(101,48,70));
         put(Material.MANGROVE_BUTTON, new Color(117,54,48));
         put(Material.SPRUCE_BUTTON, new Color(114,84,48));
+
+        put(Material.BLACK_CARPET, new Color(20,21,25));
+        put(Material.WHITE_CARPET, new Color(233,236,236));
+        put(Material.BLUE_CARPET, new Color(53,57,157));
+        put(Material.BROWN_CARPET, new Color(114,71,40));
+        put(Material.CYAN_CARPET, new Color(21,137,145));
+        put(Material.GRAY_CARPET, new Color(62,68,71));
+        put(Material.GREEN_CARPET, new Color(84,109,27));
+        put(Material.LIGHT_BLUE_CARPET, new Color(58,175,217));
+        put(Material.LIGHT_GRAY_CARPET, new Color(142,142,134));
+        put(Material.LIME_CARPET, new Color(112,185,25));
+        put(Material.MAGENTA_CARPET, new Color(189,68,179));
+        put(Material.ORANGE_CARPET, new Color(240,118,19));
+        put(Material.PINK_CARPET, new Color(237,141,172));
+        put(Material.PURPLE_CARPET, new Color(121,42,172));
+        put(Material.RED_CARPET, new Color(160,39,34));
+        put(Material.YELLOW_CARPET, new Color(248,197,39));
     }};
 }

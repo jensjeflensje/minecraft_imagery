@@ -10,6 +10,7 @@ It also supports basic rendering of players.
 That would look something like this:
 
 ![](media/examples/image2.png) <img src="media/examples/minecraft2.png" height="128"/>
+![](media/examples/image2.png) <img src="media/examples/minecraft2.png" height="128"/>
 
 It works by raytracing pixels of the picture and transforming every block into a color.
 It also applies certain filters to the color depending on light level,
