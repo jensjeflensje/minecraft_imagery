@@ -32,11 +32,8 @@ public class S3StorageProvider implements StorageProvider {
                 .build();
         this.bucket = bucket;
 
-        // TODO: make this work
-        // count is not correct and it probably has something to do with the response
-        // (we're requesting the wrong thing)
         int fileCount = this.s3
-                .path()
+                .path(this.bucket)
                 .responseAsXml()
                 .childrenWithName("Contents")
                 .size();
