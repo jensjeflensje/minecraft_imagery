@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: maven:3-jdk-17
+      image: maven:3.8.3-openjdk-17
     steps:
       - name: Checkout
         uses: actions/checkout@v3
