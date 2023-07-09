@@ -15,6 +15,8 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Import Maven settings
+        run: echo "$MAVEN_SETTINGS" > ~/.m2/settings.xml
       - name: Set up Maven Central Repository
         uses: actions/setup-java@v3
         with:
