@@ -4,7 +4,7 @@
 
     <groupId>dev.jensderuiter</groupId>
     <artifactId>minecraft-imagery</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 
     <name>Minecraft ImageryAPI</name>
     <description>Toolkit for taking pictures or videos in Minecraft</description>
@@ -35,12 +35,20 @@
         </repository>
     </distributionManagement>
 
+    <developers>
+        <developer>
+            <name>Jens de Ruiter</name>
+            <email>me@jensderuiter.dev</email>
+            <organization>Jederu</organization>
+            <organizationUrl>https://github.com/jensjeflensje</organizationUrl>
+        </developer>
+    </developers>
+
     <scm>
-        <developerConnection>
-            scm:git:git@github.com:jensjeflensje/minecraft_imagery.git
-        </developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <connection>scm:git:git@github.com:jensjeflensje/minecraft_imagery.git</connection>
+        <developerConnection>scm:git:git@github.com:jensjeflensje/minecraft_imagery.git</developerConnection>
+        <url>https://github.com/jensjeflensje/minecraft_imagery</url>
+    </scm>
 
     <build>
         <plugins>
@@ -52,6 +60,19 @@
                     <source>16</source>
                     <target>16</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -88,9 +109,34 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
+                    <useReleaseProfile>true</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
