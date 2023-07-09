@@ -13,6 +13,7 @@ jobs:
       - name: Configure GPG Key
         shell: 'script -q -e -c "bash {0}"'
         run: |
+          export GPG_TTY=`tty`
           echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
