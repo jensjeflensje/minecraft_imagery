@@ -36,7 +36,12 @@ and you're most likely ready to start development.
 
 ### Developer guide
 Please refer to [this readme](./src/main/java/dev/jensderuiter/minecraft_imagery/image/README.md)
-for the developer guide.
+for the developer guide on image captures.
+
+### Storage system
+The library also has an easy-to-use storage system for generated images.
+Please refer to [this readme](./src/main/java/dev/jensderuiter/minecraft_imagery/storage/README.md)
+for more information about this feature.
 
 ### Permissions
 Every admin permission requires the `imageryapi.admin` permission.
