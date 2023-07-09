@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.jensderuiter</groupId>
-    <artifactId>minecraft_imagery</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>minecraft-imagery</artifactId>
+    <version>1.0.0</version>
 
     <name>Minecraft ImageryAPI</name>
     <description>Toolkit for taking pictures or videos in Minecraft</description>

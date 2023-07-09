@@ -1,0 +1,40 @@
+name: Release
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: maven:3-jdk-17
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        run: mvn clean package
+      - name: Extract Maven project version
+        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        id: project
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.project.outputs.version }}
+          release_name: Release ${{ steps.project.outputs.version }}
+          body: New release
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /__w/minecraft_imagery/minecraft_imagery/target/minecraft-imagery-${{ steps.project.outputs.version }}.jar
+          asset_name: ImageryAPI-${{ steps.project.outputs.version }}.jar
+          asset_content_type: application/jar
