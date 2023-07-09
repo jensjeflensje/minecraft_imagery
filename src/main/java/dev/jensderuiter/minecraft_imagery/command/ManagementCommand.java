@@ -5,8 +5,6 @@ import dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin;
 import dev.jensderuiter.minecraft_imagery.Util;
 import dev.jensderuiter.minecraft_imagery.image.ImageUtil;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.scheduler.BukkitRunnable;
 
