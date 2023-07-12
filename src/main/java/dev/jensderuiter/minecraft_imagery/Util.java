@@ -145,4 +145,19 @@ public class Util {
         Util.imageCache.put("skin:" + player.getName(), image );
         return image;
     }
+
+    /**
+     * Converts a throwable's stacktrace to a string.
+     * Used for further formatting.
+     * @param error The throwable to get the stacktrace from.
+     * @return The string containing the stacktrace.
+     */
+    public static String stackTraceToString(Throwable error) {
+        StringBuilder sb = new StringBuilder();
+        for (StackTraceElement element : error.getStackTrace()) {
+            sb.append(element.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

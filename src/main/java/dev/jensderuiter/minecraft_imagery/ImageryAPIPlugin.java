@@ -1,9 +1,11 @@
 package dev.jensderuiter.minecraft_imagery;
 
 import dev.jensderuiter.minecraft_imagery.command.ManagementCommand;
+import dev.jensderuiter.minecraft_imagery.skript.SkriptAddonInitializer;
 import dev.jensderuiter.minecraft_imagery.storage.LocalStorageProvider;
 import dev.jensderuiter.minecraft_imagery.storage.S3StorageProvider;
 import dev.jensderuiter.minecraft_imagery.storage.StorageProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +20,8 @@ public class ImageryAPIPlugin extends JavaPlugin {
 
     private YamlConfiguration storageConfig;
 
+    public static SkriptAddonInitializer skript;
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -27,12 +31,29 @@ public class ImageryAPIPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         Constants.init();
-
         this.initStorage();
+        this.initSkript();
     }
 
     @Override
     public void onDisable() {
+    }
+
+    /**
+     * Tries to initialize Skript support. Will show warning when it fails.
+     */
+    private void initSkript() {
+        try {
+            Class.forName("ch.njol.skript.Skript");
+            if (storage == null) {
+                Bukkit.getLogger().warning(
+                        "Skript support cannot be enabled, because no storage provider is configured.");
+                return;
+            }
+            skript = new SkriptAddonInitializer(plugin);
+        } catch (ClassNotFoundException e) {
+            skript = null;
+        }
     }
 
     /**

@@ -157,6 +157,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>skript</id>
+            <url>https://repo.skriptlang.org/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -176,6 +180,12 @@
             <groupId>com.github.davidmoten</groupId>
             <artifactId>aws-lightweight-client-java</artifactId>
             <version>0.1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.SkriptLang</groupId>
+            <artifactId>Skript</artifactId>
+            <version>2.6.4</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
