@@ -14,51 +14,36 @@ import dev.jensderuiter.minecraft_imagery.storage.StorageException;
 import org.bukkit.event.Event;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 
 @Name("Remove an image")
-@Description("Remove an image from storage using its UUID.")
-public class EffRemoveImage extends AsyncEffect {
+@Description("Remove an image from storage using a stored image object.")
+public class EffRemoveStoredImage extends AsyncEffect {
 
     static {
         Skript.registerEffect(
-                EffRemoveImage.class,
-                "remove image %string% from storage"
+                EffRemoveStoredImage.class,
+                "remove image %storedimage% from storage"
         );
     }
 
-    private Expression<String> uuid;
+    private Expression<StoredImage> image;
 
     @Override
     public boolean init(Expression<?>[] e, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
-        uuid = (Expression<String>) e[0];
+        image = (Expression<StoredImage>) e[0];
         return true;
     }
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "remove image %string% from storage";
+        return "remove image %storedimage% from storage";
     }
 
     @Override
     protected void execute(Event event) {
-        String input = uuid.getSingle(event);
-        if (input == null) {
-            Skript.error("Input for storage fetch cannot be null.");
-            return;
-        }
-
-        UUID storageUUID;
         try {
-            storageUUID = UUID.fromString(input);
-        } catch (IllegalArgumentException e) {
-            Skript.error("Input for storage fetch must be a uuid.");
-            return;
-        }
-
-        try {
-            ImageryAPIPlugin.storage.remove(storageUUID);
+            ImageryAPIPlugin.storage.remove(image.getSingle(event).getUuid());
         } catch (StorageException e) {
             Skript.error(
                     "Storage exception occurred whilst removing an image from storage: "
