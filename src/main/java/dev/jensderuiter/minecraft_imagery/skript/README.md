@@ -8,6 +8,65 @@ There are some prerequisites to using the Skript integration:
 When you have done these things,
 you can start writing scripts using ImageCapture.
 
+## Examples
+A few examples of how to use the integration.
+These examples use Skellett to write the image to a map.
+
+### Write an existing image to a map when it's initialized
+```
+on map:
+    set {_map} to event-map
+    manage skellett map {_map}
+    # this uuid is hardcoded right here, but it should (of course) exist in storage
+    set {_image} to image from storage with uuid "323ca677-8902-4f2a-90cd-239f773a86bb"
+    draw image image from {_image} on skellett map {_map}
+    loop all players:
+        send map {_map} to loop-player
+```
+
+### Take a picture when a command is executed
+```
+command /takepicture:
+    trigger:
+        set {_map} to a new map from player's world
+        manage skellett map {_map}
+        # passing all players will render all players in the view 
+        take picture from player's eye location and set to {_image}
+        draw image image from {_image} on skellett map {_map}
+        loop all players:
+            send map {_map} to loop-player
+        execute console command "/minecraft:give %name of player% minecraft:filled_map{map:%id of {_map}%} 1"
+```
+
+### Write an image capture with options to a map when it's initialized
+```
+command /takepicture:
+    trigger:
+        set {_map} to a new map from player's world
+        manage skellett map {_map}
+        # passing all players will render all players in the view 
+        set {_options} to capture options fov 0.5 day light cycle aware false
+    set {_image} to image taken from player's eye location with options {_options}
+        draw image image from {_image} on skellett map {_map}
+        loop all players:
+            send map {_map} to loop-player
+        execute console command "/minecraft:give %name of player% minecraft:filled_map{map:%id of {_map}%} 1"
+```
+
+### Write an image capture with player renders to a map when it's initialized
+```
+command /takepicture:
+    trigger:
+        set {_map} to a new map from player's world
+        manage skellett map {_map}
+        # passing all players will render all players in the view 
+    set {_image} to image taken from player's eye location with players all players
+        draw image image from {_image} on skellett map {_map}
+        loop all players:
+            send map {_map} to loop-player
+        execute console command "/minecraft:give %name of player% minecraft:filled_map{map:%id of {_map}%} 1"
+```
+
 ## Reference
 The integration consists of some effects and expressions.
 There is also 2 additional data types.
@@ -47,6 +106,11 @@ returns an image taken from the given location.
 This works the same way as the effect, BUT IT'S NOT ASYNC.
 Please be aware of this when using this expression,
 as it may freeze your server.
+
+`id of %map%`
+Used to get the id from a mapview.
+This is necessary because Skellett (recommended for writing maps) doesn't export this in any way.
+Use this id to create filled_map items.
 
 ## Data types
 **StoredImage** represents an image that is also stored in storage.
