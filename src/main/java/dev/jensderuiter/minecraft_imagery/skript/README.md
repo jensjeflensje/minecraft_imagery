@@ -11,6 +11,9 @@ you can start writing scripts using ImageCapture.
 ## Examples
 A few examples of how to use the integration.
 These examples use Skellett to write the image to a map.
+These examples may seem a bit crude (especially the execute console command part),
+but this is the best I can do right now.
+May be improved later.
 
 ### Write an existing image to a map when it's initialized
 ```
