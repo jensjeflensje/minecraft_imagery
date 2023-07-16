@@ -56,6 +56,10 @@ Start using ImageryAPI as a dependency by including it in your pom.xml like this
 Please refer to [this readme](./src/main/java/dev/jensderuiter/minecraft_imagery/image/README.md)
 for the developer guide on image captures.
 
+### Skript integration
+Apart from the library supporting Java integrations (which is its primary goal),
+a Skript integration can also be used. Please check out [this readme](./src/main/java/dev/jensderuiter/minecraft_imagery/skript/README.md).
+
 ### Storage system
 The library also has an easy-to-use storage system for generated images.
 Please refer to [this readme](./src/main/java/dev/jensderuiter/minecraft_imagery/storage/README.md)
