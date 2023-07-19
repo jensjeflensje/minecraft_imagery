@@ -49,7 +49,7 @@ Start using ImageryAPI as a dependency by including it in your pom.xml like this
 <dependency>
     <groupId>dev.jensderuiter</groupId>
     <artifactId>minecraft-imagery</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <scope>provided</scope>
 </dependency>
 ```
