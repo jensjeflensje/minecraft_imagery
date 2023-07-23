@@ -49,6 +49,7 @@ boolean storageEnabled = ImageryAPIPlugin.storage != null;
 if (storageEnabled) {
     Bukkit.getLogger().info("Storage enabled.");
 } else {
+    // could also be a warn depending on your application
     Bukkit.getLogger().info("Storage disabled. Saving images not available.");
 }
 ```
@@ -67,3 +68,23 @@ Removing: `ImageryAPIPlugin.storage.remove(UUID uuid)`
 Calling these methods may result in a `StorageException`, which should be caught.
 These may be caused by incorrect permissions, disk usage (local storage)
 or S3 availability (S3).
+
+### S3 specific methods
+The S3 storage provider also supports generating presigned urls.
+This can be used to link the player to an image,
+or pass the image to another system that doesn't have S3 access.
+**You should always check if the current storage provider has download url capabilities**.
+
+Checking for capabilities:
+```java
+boolean canGenerateUrl = ImageryAPIPlugin.storage.downloadUrlEnabled();
+if (canGenerateUrl) {
+    // call generateDownloadUrl use the url
+} else {
+    // could also be a warn depending on your application
+    Bukkit.getLogger().info("Storage provider doesn't implement download url generation");
+}
+```
+
+The presigned url has a validity of 1 day,
+which should be enough for any real world use case.
