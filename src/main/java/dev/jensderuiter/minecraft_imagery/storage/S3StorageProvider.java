@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class S3StorageProvider implements StorageProvider {
 
@@ -133,6 +134,34 @@ public class S3StorageProvider implements StorageProvider {
                     )
             );
         }
+    }
 
+    @Override
+    public boolean downloadUrlEnabled() {
+        return true;
+    }
+
+    /**
+     * Generate an S3 presigned url that's valid for one day.
+     * @param uuid The UUID of the image to fetch. You have saved this from the store method.
+     * @return The image with the specified UUID.
+     * @throws StorageException When the fetching fails.
+     */
+    @Override
+    public String generateDownloadUrl(UUID uuid) throws StorageException {
+        String fileName = getFileName(uuid.toString());
+        try {
+            return s3
+                    .path(this.bucket, fileName)
+                    .presignedUrl(1, TimeUnit.DAYS);
+        } catch (RuntimeException e) {
+            throw new StorageException(
+                    String.format(
+                            "Generating download url for %s failed: %s",
+                            fileName,
+                            e.getMessage()
+                    )
+            );
+        }
     }
 }
