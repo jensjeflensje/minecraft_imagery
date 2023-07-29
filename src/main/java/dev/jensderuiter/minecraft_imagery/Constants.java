@@ -38,7 +38,15 @@ public class Constants {
         for (String blockKey : blocksSection.getKeys(false)) {
             String[] colorParts = blocksSection.getString(blockKey).split(",");
 
-            BLOCKS.put(Material.valueOf(blockKey.toUpperCase()), new Color(
+            Material material;
+            try {
+                material = Material.valueOf(blockKey.toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+                // may not exist when on a different Minecraft version
+                continue;
+            }
+
+            BLOCKS.put(material, new Color(
                     Integer.parseInt(colorParts[0]),
                     Integer.parseInt(colorParts[1]),
                     Integer.parseInt(colorParts[2])
@@ -92,7 +100,6 @@ public class Constants {
 
         // glass blocks
         put(Material.GLASS, new TranslucentBlock(Material.GLASS, new double[] {0.3, 0.3, 0.3}));
-        put(Material.TINTED_GLASS, new TranslucentBlock(Material.TINTED_GLASS, new double[] {0.7, 0.7, 0.7}));
         put(Material.BLACK_STAINED_GLASS, new TranslucentBlock(Material.BLACK_STAINED_GLASS, new double[] {0.9, 0.9, 0.9}));
         put(Material.BLUE_STAINED_GLASS, new TranslucentBlock(Material.BLUE_STAINED_GLASS, new double[] {0.3, 0.3, 0.9}));
         put(Material.CYAN_STAINED_GLASS, new TranslucentBlock(Material.CYAN_STAINED_GLASS, new double[] {0.3, 0.5, 0.8}));
@@ -141,7 +148,6 @@ public class Constants {
         put(Material.DARK_OAK_BUTTON, new Color(35,27,16));
         put(Material.WARPED_BUTTON, new Color(43,104,99));
         put(Material.CRIMSON_BUTTON, new Color(101,48,70));
-        put(Material.MANGROVE_BUTTON, new Color(117,54,48));
         put(Material.SPRUCE_BUTTON, new Color(114,84,48));
 
         put(Material.BLACK_CARPET, new Color(20,21,25));

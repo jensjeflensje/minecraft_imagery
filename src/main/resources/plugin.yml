@@ -1,7 +1,7 @@
 name: ImageryAPI
 version: '${project.version}'
 main: dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin
-api-version: 1.13
+api-version: 1.16
 author: jensjeflensje
 softdepend: [Skript]
 commands:
