@@ -70,6 +70,20 @@ command /takepicture:
         execute console command "/minecraft:give %name of player% minecraft:filled_map{map:%id of {_map}%} 1"
 ```
 
+### Give a map to the player with NBT (cleaner, but requires SkBee)
+```
+command /takepicture:
+    trigger:
+        set {_map} to a new map from player's world
+        manage skellett map {_map}
+        take picture from player's eye location and set to {_image}
+        draw image image from {_image} on skellett map {_map}
+        send map {_map} to all players
+        set {_item} to filled map
+        set int tag "map" of nbt compound of {_item} to id of {_map}
+        add {_item} to player's inventory
+```
+
 ## Reference
 The integration consists of some effects and expressions.
 There is also 2 additional data types.
