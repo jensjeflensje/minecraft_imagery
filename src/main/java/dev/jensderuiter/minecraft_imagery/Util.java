@@ -2,7 +2,6 @@ package dev.jensderuiter.minecraft_imagery;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.profile.PlayerTextures;
 
