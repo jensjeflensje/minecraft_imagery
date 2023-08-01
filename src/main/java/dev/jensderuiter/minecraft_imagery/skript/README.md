@@ -63,7 +63,7 @@ command /takepicture:
         set {_map} to a new map from player's world
         manage skellett map {_map}
         # passing all players will render all players in the view 
-    set {_image} to image taken from player's eye location with players all players
+        set {_image} to image taken from player's eye location with players all players
         draw image image from {_image} on skellett map {_map}
         loop all players:
             send map {_map} to loop-player

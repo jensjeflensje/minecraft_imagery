@@ -1,18 +1,28 @@
 package dev.jensderuiter.minecraft_imagery;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.profile.PlayerTextures;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Util {
 
     public static HashMap<String, BufferedImage> imageCache = new HashMap<>();
+
+    // true is steve, false is alex (slim)
+    public static HashMap<Player, Boolean> skinModelCache = new HashMap<>();
 
     /**
      * Gets an image using the specified name.
@@ -49,7 +59,7 @@ public class Util {
         BufferedImage skin = getPlayerSkin(player);
 
         int armSize = 4;
-        if (player.getPlayerProfile().getTextures().getSkinModel() == PlayerTextures.SkinModel.SLIM) {
+        if (!skinModelCache.get(player)) {
             armSize = 3;
         }
 
@@ -130,20 +140,60 @@ public class Util {
      * Gets the raw skin texture from the Mojang API.
      * Also caches the skin texture indefinitely in memory.
      * @param player The player to get the skin texture from
-     * @return An image containing the raw
+     * @return An image containing the raw skin
      */
     private static BufferedImage getPlayerSkin(Player player) {
         BufferedImage image = Util.imageCache.get("skin:" + player.getName());
         if (image != null) return image;
 
         try {
-            image = ImageIO.read(player.getPlayerProfile().getTextures().getSkin());
+            JsonObject profile = getPlayerProfile(player.getUniqueId());
+            String skinUrl = profile
+                    .get("textures").getAsJsonObject()
+                    .get("SKIN").getAsJsonObject()
+                    .get("url").getAsString();
+            image = ImageIO.read(new URL(skinUrl));
+
+            skinModelCache.put(player, profile
+                    .get("textures").getAsJsonObject()
+                    .get("SKIN").getAsJsonObject()
+                    .get("metadata") == null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         Util.imageCache.put("skin:" + player.getName(), image );
         return image;
+    }
+
+    /**
+     * Gets the player profile from the Mojang API.
+     * @param uuid The uuid of the player
+     * @return A JSONObject containing the profile
+     */
+    private static JsonObject getPlayerProfile(UUID uuid) throws IOException {
+        URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        int status = conn.getResponseCode();
+        if (status != 200) throw new RuntimeException("Mojang API request was not successful");
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        in.close();
+
+        JsonObject json = new Gson().fromJson(content.toString(), JsonObject.class);
+
+        byte[] decodedBytes = Base64.getDecoder().decode(
+                json.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString());
+        String profile = new String(decodedBytes, StandardCharsets.UTF_8);
+
+        return new Gson().fromJson(profile, JsonObject.class);
     }
 
     /**
