@@ -111,7 +111,7 @@ public class ImageCapture {
                 double[] dye = new double[]{1, 1, 1};
 
                 // max tries for blocks to look through
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < 10; i++) {
                     RayTraceResult result = this.location.getWorld().rayTraceBlocks(
                             lookFrom, rayTraceVector, 256,
                             FluidCollisionMode.ALWAYS, false);
@@ -139,6 +139,12 @@ public class ImageCapture {
                                 .add(rayTraceVector.normalize())
                                 .toLocation(this.location.getWorld());
                         continue;
+                    }
+
+                    // darken the block when it's far away
+                    if (this.options.isShowDepth()) {
+                        double distance = this.location.distance(result.getHitBlock().getLocation());
+                        dye = this.darkenDyeByDistance(dye, distance);
                     }
 
                     // color the pixel
@@ -285,6 +291,20 @@ public class ImageCapture {
         Color color = ImageUtil.colorFromType(result.getHitBlock(), dye);
 
         if (color != null) this.image.setRGB(x, y, color.getRGB());
+    }
+
+    /**
+     * Darken a dye using a given distance.
+     * The farther away, the darker the dye.
+     * @param dye The dye to darken.
+     * @param distance distance in blocks.
+     * @return The darkened dye.
+     */
+    public double[] darkenDyeByDistance(double[] dye, double distance) {
+        for(int i = 0; i < dye.length; i++) {
+            dye[i] = dye[i] * (1 - (distance / 600));
+        }
+        return dye;
     }
 
     /**
