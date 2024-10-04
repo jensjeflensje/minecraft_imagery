@@ -86,12 +86,12 @@ public class ImageUtil {
      * @return The ready-to-use color from the block with the dye applied.
      */
     public static Color colorFromType(Block block, double[] dye) {
+        if (Constants.EXCLUDED_BLOCKS.contains(block.getType())) return Constants.SKY_COLOR;
+
         if (Constants.BLOCKS.containsKey(block.getType())) {
             // if blockMap has a color for the material, use that color
             return applyDye(Constants.BLOCKS.get(block.getType()), dye);
         }
-
-        if (Constants.EXCLUDED_BLOCKS.contains(block.getType())) return Constants.SKY_COLOR;
 
         BufferedImage image = Util.getImage(block.getType().getKey().getKey());
         if (image != null) {
