@@ -42,16 +42,15 @@ Start using ImageryAPI as a dependency by including it in your pom.xml like this
 ```xml
 <!-- Repository (if not already present) -->
 <repository>
-    <id>sonatype-s01</id>
-    <url>https://s01.oss.sonatype.org/content/groups/public/</url>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
 </repository>
 
 <!-- Dependency -->
 <dependency>
-    <groupId>dev.jensderuiter</groupId>
-    <artifactId>minecraft-imagery</artifactId>
+    <groupId>com.github.jensjeflensje</groupId>
+    <artifactId>minecraft_imagery</artifactId>
     <version>1.2.0</version>
-    <scope>provided</scope>
 </dependency>
 ```
 Please refer to [this readme](./src/main/java/dev/jensderuiter/minecraft_imagery/image/README.md)
