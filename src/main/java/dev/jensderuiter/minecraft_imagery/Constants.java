@@ -65,7 +65,7 @@ public class Constants {
             Material.TALL_GRASS,
             Material.FERN,
             Material.LARGE_FERN,
-            Material.GRASS
+            Material.SHORT_GRASS
     );
 
     // TODO: make this not contain a duplicate material entry

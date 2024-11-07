@@ -6,7 +6,7 @@ import org.bukkit.Material;
 
 import java.awt.*;
 
-@VersionPatch(version = 17)
+@VersionPatch(version = 19)
 public class Patch19 implements Patch {
 
     @Override
