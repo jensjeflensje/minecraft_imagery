@@ -29,8 +29,12 @@ public class EffRemoveImage extends AsyncEffect {
 
     private Expression<String> uuid;
 
+    @SuppressWarnings("unchecked") // we checked the expression return type
     @Override
     public boolean init(Expression<?>[] e, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
+        if(e == null || e.length < 1 || e[0].getReturnType() != String.class) {
+            return false;
+        }
         uuid = (Expression<String>) e[0];
         return true;
     }

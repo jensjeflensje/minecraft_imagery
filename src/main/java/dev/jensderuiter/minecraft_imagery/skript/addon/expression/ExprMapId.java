@@ -37,6 +37,9 @@ public class ExprMapId extends SimpleExpression<Integer> {
 
     @SuppressWarnings("unchecked")
     public boolean init(Expression<?>[] e, int matchedPattern, Kleenean isDelayed, ParseResult parser) {
+        if(e == null || e.length < 1 || e[0].getReturnType() != MapView.class) {
+            return false;
+        }
         mapView = (Expression<MapView>) e[0];
         return true;
     }

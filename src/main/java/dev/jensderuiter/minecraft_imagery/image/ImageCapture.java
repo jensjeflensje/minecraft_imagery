@@ -339,7 +339,7 @@ public class ImageCapture {
             }
         }
 
-        return nearestHitEntity == null ? null : new RayTraceResult(nearestHitResult.getHitPosition(), nearestHitEntity, nearestHitResult.getHitBlockFace());
+        return (nearestHitEntity == null || nearestHitResult == null) ? null : new RayTraceResult(nearestHitResult.getHitPosition(), nearestHitEntity, nearestHitResult.getHitBlockFace());
     }
 
 }
