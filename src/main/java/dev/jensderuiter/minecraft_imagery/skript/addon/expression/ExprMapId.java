@@ -8,13 +8,10 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import dev.jensderuiter.minecraft_imagery.skript.addon.type.StoredImage;
 import org.bukkit.event.Event;
 import org.bukkit.map.MapView;
 
 import javax.annotation.Nullable;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 @Name("Image from storage")
 @Description("Read an image from the storage provider. Supports all storage providers.")

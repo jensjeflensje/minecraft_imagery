@@ -9,7 +9,6 @@ import ch.njol.skript.util.AsyncEffect;
 import ch.njol.util.Kleenean;
 import dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin;
 import dev.jensderuiter.minecraft_imagery.Util;
-import dev.jensderuiter.minecraft_imagery.skript.addon.type.StoredImage;
 import dev.jensderuiter.minecraft_imagery.storage.StorageException;
 import org.bukkit.event.Event;
 
