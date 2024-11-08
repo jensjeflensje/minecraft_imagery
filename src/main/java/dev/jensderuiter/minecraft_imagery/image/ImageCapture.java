@@ -314,12 +314,13 @@ public class ImageCapture {
      * @param maxDistance The maximum amount of blocks to raytrace in the direction.
      * @return A RayTraceResult with the first entity the raytrace has collided with, or null if there is none.
      */
+    
     private RayTraceResult rayTraceEntitiesFromList(Location start, Vector direction, double maxDistance) {
         Vector startPos = start.toVector();
         Entity nearestHitEntity = null;
         RayTraceResult nearestHitResult = null;
         double nearestDistanceSq = Double.MAX_VALUE;
-        Iterator var17 = entities.iterator();
+        Iterator<Player> var17 = entities.iterator();
 
         while(var17.hasNext()) {
             Entity entity = (Entity)var17.next();
