@@ -125,6 +125,9 @@ public class VideoFrameCapture {
                         }
                     }
                     break;
+                default:
+                    // do nothing for NE/NW/SE/SW etc
+                    break;
             }
         }
 
@@ -141,6 +144,9 @@ public class VideoFrameCapture {
             case WEST:
                 wMod = -1;
                 hMod = -1;
+                break;
+            default:
+                // do nothing for NE/NW/SE/SW etc
                 break;
         }
 
@@ -279,6 +285,9 @@ public class VideoFrameCapture {
                     break;
                 case WEST:
                     yawToCamera = playerLocation.getYaw() + 90;
+                    break;
+                default:
+                    // do nothing for NE/NW/SE/SW etc
                     break;
 
             }
