@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -151,7 +152,7 @@ public class Util {
                     .get("textures").getAsJsonObject()
                     .get("SKIN").getAsJsonObject()
                     .get("url").getAsString();
-            image = ImageIO.read(new URL(skinUrl));
+            image = ImageIO.read(URI.create(skinUrl).toURL());
 
             skinModelCache.put(player, profile
                     .get("textures").getAsJsonObject()
@@ -171,7 +172,7 @@ public class Util {
      * @return A JSONObject containing the profile
      */
     private static JsonObject getPlayerProfile(UUID uuid) throws IOException {
-        URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString());
+        URL url = URI.create("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString()).toURL();
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         int status = conn.getResponseCode();
