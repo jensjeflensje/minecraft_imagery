@@ -9,7 +9,6 @@ import ch.njol.skript.util.AsyncEffect;
 import ch.njol.util.Kleenean;
 import dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin;
 import dev.jensderuiter.minecraft_imagery.Util;
-import dev.jensderuiter.minecraft_imagery.skript.addon.type.StoredImage;
 import dev.jensderuiter.minecraft_imagery.storage.StorageException;
 import org.bukkit.event.Event;
 
@@ -30,8 +29,12 @@ public class EffRemoveImage extends AsyncEffect {
 
     private Expression<String> uuid;
 
+    @SuppressWarnings("unchecked") // we checked the expression return type
     @Override
     public boolean init(Expression<?>[] e, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
+        if(e == null || e.length < 1 || e[0].getReturnType() != String.class) {
+            return false;
+        }
         uuid = (Expression<String>) e[0];
         return true;
     }

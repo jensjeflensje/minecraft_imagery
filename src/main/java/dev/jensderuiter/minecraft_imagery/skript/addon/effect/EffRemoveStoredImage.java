@@ -29,8 +29,12 @@ public class EffRemoveStoredImage extends AsyncEffect {
 
     private Expression<StoredImage> image;
 
+    @SuppressWarnings("unchecked") // we did check the expression return type
     @Override
     public boolean init(Expression<?>[] e, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
+        if(e == null || e.length < 1 || e[0].getReturnType() != StoredImage.class) {
+            return false;
+        }
         image = (Expression<StoredImage>) e[0];
         return true;
     }

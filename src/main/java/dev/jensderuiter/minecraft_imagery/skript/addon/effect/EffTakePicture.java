@@ -41,14 +41,23 @@ public class EffTakePicture extends AsyncEffect {
     private Expression<Player> players;
 
     // The variable that we're going to put the image in
-    private Expression<Variable> variable;
+    private Expression<Variable<?>> variable;
 
+    @SuppressWarnings("unchecked") // verified each class type in the expression array
     @Override
     public boolean init(Expression<?>[] e, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
+        if(
+            e == null || e.length < 4
+            || e[0].getReturnType() != Location.class
+            || e[1].getReturnType() != ImageCaptureOptions.class
+            || e[2].getReturnType() != Player.class
+            || e[3].getReturnType() != Variable.class) {
+                return false;
+        }
         location = (Expression<Location>) e[0];
         options = (Expression<ImageCaptureOptions>) e[1];
         players = (Expression<Player>) e[2];
-        variable = (Expression<Variable>) e[3];
+        variable = (Expression<Variable<?>>) e[3];
         return true;
     }
 
