@@ -161,8 +161,8 @@ public class ImageCapture {
                         pixelList = new ArrayList<>();
                     }
                     pixelList.add(new RayTracedPoint2D(
-                           new Point2D.Float(x, y),
-                           entityResult.getHitPosition().toLocation(this.location.getWorld())
+                            new Point2D.Float(x, y),
+                            entityResult.getHitPosition().toLocation(this.location.getWorld())
                     ));
                     playerOccurrences.put(hitPlayer, pixelList);
                 }
