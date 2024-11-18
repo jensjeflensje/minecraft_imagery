@@ -69,6 +69,7 @@ public class Constants {
     );
 
     // TODO: make this not contain a duplicate material entry
+    @SuppressWarnings("deprecation") // it's no biggie if we support depricated keys like LEGACY_STAINED_GLASS_PANE here
     public static HashMap<Material, TranslucentBlock> TRANSLUCENT_BLOCKS = new HashMap<>() {{
         put(Material.IRON_BARS, new TranslucentBlock(Material.IRON_BARS, new double[] {0.8, 0.8, 0.8}));
 
