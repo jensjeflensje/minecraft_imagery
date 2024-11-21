@@ -1,7 +1,9 @@
 package dev.jensderuiter.minecraft_imagery.image;
 
+import dev.jensderuiter.minecraft_imagery.ImageryAPIPlugin;
 import dev.jensderuiter.minecraft_imagery.Util;
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.BoundingBox;
@@ -14,6 +16,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A class to render a single photo of a Minecraft world and the players in it.
@@ -30,6 +34,15 @@ public class ImageCapture {
     BufferedImage image;
     Graphics2D graphics;
     Map<Player, List<RayTracedPoint2D>> playerOccurrences;
+
+    private static ConfigurationSection renderSection =
+                ImageryAPIPlugin.plugin.getConfig().getConfigurationSection("render");
+
+    // configure the thread pool from user settings
+    private static int maxRenderThreads = renderSection.getInt("max-threads");
+    // default to 1 thread if not set (will just function as if single-threaded)
+    // the thread pool for the pixel renderer
+    private static ExecutorService renderThreadPool = Executors.newFixedThreadPool(maxRenderThreads < 1 ? 1 : maxRenderThreads);
 
     /**
      * Creates an instance of the ImageCapture class.
@@ -161,8 +174,8 @@ public class ImageCapture {
                         pixelList = new ArrayList<>();
                     }
                     pixelList.add(new RayTracedPoint2D(
-                           new Point2D.Float(x, y),
-                           entityResult.getHitPosition().toLocation(this.location.getWorld())
+                            new Point2D.Float(x, y),
+                            entityResult.getHitPosition().toLocation(this.location.getWorld())
                     ));
                     playerOccurrences.put(hitPlayer, pixelList);
                 }

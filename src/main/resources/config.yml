@@ -1,4 +1,7 @@
-# values are in RGB
+render:
+  max-threads: 8
+
+# values are in RGB 0-255
 
 blocks:
   cobblestone: 127,127,127
