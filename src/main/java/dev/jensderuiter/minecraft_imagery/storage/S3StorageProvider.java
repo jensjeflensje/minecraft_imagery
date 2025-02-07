@@ -105,6 +105,7 @@ public class S3StorageProvider implements StorageProvider {
 
             s3
                 .path(this.bucket, fileName)
+                .header("Content-Type", String.format("image/%s", getExtension()))
                 .method(HttpMethod.PUT)
                 .requestBody(bytes)
                 .execute();
